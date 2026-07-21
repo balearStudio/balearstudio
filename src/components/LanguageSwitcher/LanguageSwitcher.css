@@ -1,0 +1,36 @@
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.lang-switch__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.lang-switch__sep {
+  color: var(--color-line-strong);
+  font-size: 0.75rem;
+}
+
+.lang-switch__btn {
+  color: var(--color-text-soft);
+  padding: 0.25rem 0.15rem;
+  transition: color 0.25s var(--ease-out);
+  font-weight: 500;
+}
+.lang-switch__btn:hover {
+  color: var(--color-text);
+}
+.lang-switch__btn.is-active {
+  color: var(--color-ink);
+}
+
+/* On the mobile overlay, show it larger */
+.header__mobile-lang .lang-switch {
+  font-size: 1.05rem;
+}

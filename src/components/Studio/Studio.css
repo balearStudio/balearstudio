@@ -1,0 +1,104 @@
+.studio {
+  background: var(--color-bg-alt);
+  /* The colour change into Contact is itself the separator, so this
+     joint needs much less whitespace than the .section default. */
+  padding-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+
+.studio .eyebrow {
+  margin-bottom: 2rem;
+}
+
+.studio__statement {
+  font-size: clamp(1.8rem, 4.6vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  max-width: 20ch;
+}
+
+.studio__body {
+  margin-top: 2rem;
+  max-width: 58ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  color: var(--color-text);
+  line-height: 1.55;
+}
+
+/* What we do ----------------------------------------------- */
+.studio__do {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(4rem, 9vw, 7rem);
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--color-line-strong);
+}
+.studio__do-title {
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  margin-bottom: 1.1rem;
+}
+.studio__do-body {
+  color: var(--color-text);
+  max-width: 44ch;
+  font-size: 1.05rem;
+}
+
+.studio__services {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.5rem;
+  align-content: start;
+}
+.studio__service {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-ink);
+  font-size: 0.98rem;
+}
+.studio__service-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  flex-shrink: 0;
+}
+
+/* Values --------------------------------------------------- */
+.studio__values {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+.studio__value {
+  border-top: 1px solid var(--color-line-strong);
+  padding-top: 1.4rem;
+}
+.studio__value-k {
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+.studio__value-t {
+  margin-top: 1.6rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.studio__value-d {
+  margin-top: 0.7rem;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+@media (max-width: 900px) {
+  .studio__do { grid-template-columns: 1fr; }
+  .studio__values { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .studio__services { grid-template-columns: 1fr; }
+  .studio__values { grid-template-columns: 1fr; }
+}

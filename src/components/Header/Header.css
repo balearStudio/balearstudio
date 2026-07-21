@@ -1,0 +1,146 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background 0.4s var(--ease-out), border-color 0.4s var(--ease-out),
+    backdrop-filter 0.4s var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+
+.header--scrolled {
+  /* High-opacity solid first: backdrop-filter + alpha doesn't composite
+     reliably in every environment, so readability can't depend on it. */
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom-color: var(--color-line);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;
+}
+
+.header__nav {
+  display: flex;
+  gap: 2.4rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header__link {
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  transition: color 0.25s var(--ease-out);
+  position: relative;
+}
+.header__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease-out);
+}
+.header__link:hover {
+  color: var(--color-ink);
+}
+.header__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Burger ---------------------------------------------------- */
+.header__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+}
+.header__burger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--color-ink);
+  transition: transform 0.35s var(--ease-out), opacity 0.2s var(--ease-out);
+}
+.header__burger.is-open span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+.header__burger.is-open span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* Mobile overlay -------------------------------------------
+   height is set explicitly (not just inset) and paired with
+   overflow-y so long content scrolls INSIDE the panel instead
+   of spilling past it onto unstyled page content. Solid
+   background on purpose: backdrop-filter + alpha does not
+   composite reliably everywhere, and readability here can't
+   be left to chance. */
+.header__mobile {
+  position: fixed;
+  top: 78px;
+  left: 0;
+  right: 0;
+  height: calc(100svh - 78px);
+  background: var(--color-bg);
+  padding: 2rem var(--gutter) 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out),
+    visibility 0.35s;
+}
+.header__mobile.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.header__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 1rem;
+  flex-shrink: 0;
+}
+.header__mobile-nav a {
+  display: block;
+  font-size: clamp(2.2rem, 10vw, 3.4rem);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  padding-block: 0.3rem;
+}
+.header__mobile-lang {
+  padding-top: 1.5rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 800px) {
+  .header__nav { display: none; }
+  .header__burger { display: flex; }
+  .header__right .lang-switch { display: none; }
+}

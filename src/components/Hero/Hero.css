@@ -1,0 +1,135 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  /* Height-aware padding: shrinks on short/wide viewports instead of a
+     fixed rem value that can push the CTA below the fold. */
+  padding-block: clamp(5.5rem, 12svh, 9rem) clamp(2rem, 6svh, 3.5rem);
+  overflow: hidden;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.1rem, 3svh, 2.6rem);
+  width: 100%;
+}
+
+.hero__eyebrow {
+  margin-bottom: 0.4rem;
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 7.5vw, 6.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+}
+
+/* Line-mask reveal wrapper */
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;   /* room for descenders during the mask */
+}
+.hero__line > span {
+  display: block;
+}
+.hero__line--accent > span {
+  color: var(--color-text-soft);
+}
+
+.hero__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: clamp(0.75rem, 2.5svh, 2rem);
+}
+
+.hero__lead {
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: var(--color-text);
+}
+
+/* Primary button ------------------------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 1rem 1.6rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform 0.35s var(--ease-out), background 0.35s var(--ease-out);
+}
+.btn-primary svg {
+  transition: transform 0.35s var(--ease-out);
+}
+.btn-primary:hover {
+  background: #262626;
+  transform: translateY(-2px);
+}
+.btn-primary:hover svg {
+  transform: translateX(4px);
+}
+
+/* Scroll cue ----------------------------------------------- */
+.hero__scroll {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  writing-mode: vertical-rl;
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(to bottom, var(--color-line-strong), transparent);
+  position: relative;
+  overflow: hidden;
+}
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform: translateY(-100%);
+  animation: scrollCue 2.2s var(--ease-in-out) infinite;
+}
+@keyframes scrollCue {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(100%); }
+  100% { transform: translateY(100%); }
+}
+
+@media (max-width: 800px) {
+  /* On narrow screens the content column is short relative to the full
+     100svh box, so bottom-anchoring (desktop) leaves a large empty gap
+     up top. Centering balances it instead of stacking it all below. */
+  .hero {
+    min-height: 92svh;
+    align-items: center;
+  }
+  .hero__scroll { display: none; }
+  .hero__bottom { flex-direction: column; align-items: flex-start; gap: 1.8rem; }
+}
+
+/* Short/wide viewports (landscape laptops, small browser windows) */
+@media (max-height: 720px) {
+  .hero__scroll { display: none; }
+  .hero__title { font-size: clamp(2.2rem, 6.5vw, 4.6rem); }
+}

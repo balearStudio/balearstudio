@@ -1,0 +1,64 @@
+.contact {
+  background: var(--color-ink);
+  color: #b4b4b4;
+  padding-top: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+/* Invert the greyscale system inside the dark contact block */
+.contact .eyebrow { color: #7d7d7d; }
+.contact .eyebrow::before { background: #3a3a3a; }
+
+.contact__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.6rem;
+}
+
+.contact__title {
+  color: #ffffff;
+  font-size: clamp(2.2rem, 6.5vw, 5rem);
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+  margin-top: 0.5rem;
+}
+
+.contact__body {
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: #9a9a9a;
+}
+
+/* Big email link ------------------------------------------- */
+.contact__mail {
+  position: relative;
+  margin-top: 1.5rem;
+  font-size: clamp(1.4rem, 4.5vw, 3rem);
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+.contact__mail-underline {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+.contact__mail:hover .contact__mail-underline {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.contact__cta {
+  margin-top: 1.5rem;
+  background: #ffffff;
+  color: var(--color-ink);
+}
+.contact__cta:hover {
+  background: #ececec;
+}

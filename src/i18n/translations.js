@@ -1,0 +1,257 @@
+/* ============================================================
+   Translations — Spanish (default), Catalan, English.
+   Access with the useLanguage() hook's `t` helper.
+   ============================================================ */
+
+export const LANGUAGES = [
+  { code: 'es', label: 'ES', name: 'Español' },
+  { code: 'ca', label: 'CA', name: 'Català' },
+  { code: 'en', label: 'EN', name: 'English' },
+]
+
+export const DEFAULT_LANG = 'es'
+
+export const translations = {
+  es: {
+    nav: {
+      work: 'Proyectos',
+      studio: 'Estudio',
+      contact: 'Contacto',
+    },
+    hero: {
+      location: 'Mallorca — Estudio digital',
+      titleLine1: 'Diseñamos y construimos',
+      titleLine2: 'soluciones digitales',
+      titleAccent: 'con inteligencia.',
+      lead: 'Somos un estudio digital de Mallorca. Combinamos ingeniería, diseño e Inteligencia Artificial para resolver problemas de negocio reales — con rapidez y sin complicaciones innecesarias.',
+      cta: 'Empezar un proyecto',
+      scroll: 'Desliza',
+    },
+    work: {
+      eyebrow: 'Proyectos seleccionados',
+      title: 'Trabajo reciente',
+      intro: 'Una selección de proyectos donde la tecnología crea valor medible.',
+      visit: 'Visitar sitio',
+      privateLabel: 'Acceso privado',
+      privateHint: 'Disponible bajo petición — no publicado por privacidad.',
+      gallery: 'Ver capturas',
+      galleryClose: 'Cerrar',
+      galleryPrev: 'Anterior',
+      galleryNext: 'Siguiente',
+      items: {
+        finai: {
+          name: 'Web de boda',
+          category: 'Web de boda',
+          desc: 'Web de boda con un estilo mediterráneo limpio y elegante: cuenta atrás en directo, ilustraciones hechas a mano y toda la información de la celebración en un solo lugar.',
+        },
+        melani: {
+          name: 'Centro Melani Costa',
+          category: 'Web profesional',
+          desc: 'Sitio web para el centro de Melani Costa, medallista olímpica, centrado en claridad y conversión.',
+        },
+        predicasa: {
+          name: 'Predicasa',
+          category: 'Aplicación con IA',
+          desc: 'Plataforma que predice precios de vivienda en Mallorca sobre una gran base de datos, detectando oportunidades y valorando si un precio es competitivo frente al mercado.',
+        },
+      },
+    },
+    studio: {
+      eyebrow: 'El estudio',
+      whoTitle: 'Dos ingenieros con una obsesión: que la tecnología trabaje para tu negocio.',
+      whoBody: 'Nacimos de la ingeniería y de gestionar proyectos técnicos complejos, donde la eficiencia, la calidad y el pensamiento estructurado lo son todo. Creemos que cualquier empresa, sea del tamaño que sea, debería poder aprovechar la tecnología y la IA para ser más eficiente y crecer.',
+      doTitle: 'Qué hacemos',
+      doBody: 'No hacemos simplemente webs. Resolvemos problemas de negocio con tecnología — y automatizamos con IA siempre que aporta valor real.',
+      services: [
+        'Webs y landing pages',
+        'E-commerce',
+        'Aplicaciones web a medida',
+        'Chatbots con IA',
+        'Automatización de negocio',
+        'Integraciones e IA',
+        'SEO y rendimiento',
+        'Consultoría digital',
+      ],
+      values: [
+        { k: '01', t: 'Simplicidad', d: 'La mejor solución suele ser la más simple que resuelve el problema por completo.' },
+        { k: '02', t: 'Velocidad', d: 'Entregas rápidas sin sacrificar calidad. El tiempo importa.' },
+        { k: '03', t: 'Fiabilidad', d: 'Software robusto y escalable, pensado con mentalidad de ingeniería.' },
+        { k: '04', t: 'IA aplicada', d: 'La IA como acelerador para construir mejores soluciones, más rápido.' },
+      ],
+    },
+    contact: {
+      eyebrow: 'Contacto',
+      title: '¿Tienes un proyecto en mente?',
+      body: 'Cuéntanos qué necesitas. Respondemos rápido y hablamos claro.',
+      cta: 'Escríbenos',
+      or: 'o escríbenos a',
+    },
+    footer: {
+      tagline: 'Estudio digital · Mallorca, España',
+      rights: 'Todos los derechos reservados.',
+      backTop: 'Volver arriba',
+    },
+  },
+
+  ca: {
+    nav: {
+      work: 'Projectes',
+      studio: 'Estudi',
+      contact: 'Contacte',
+    },
+    hero: {
+      location: 'Mallorca — Estudi digital',
+      titleLine1: 'Dissenyem i construïm',
+      titleLine2: 'solucions digitals',
+      titleAccent: 'amb intel·ligència.',
+      lead: 'Som un estudi digital de Mallorca. Combinem enginyeria, disseny i Intel·ligència Artificial per resoldre problemes de negoci reals — amb rapidesa i sense complicacions innecessàries.',
+      cta: 'Començar un projecte',
+      scroll: 'Desplaça',
+    },
+    work: {
+      eyebrow: 'Projectes seleccionats',
+      title: 'Feina recent',
+      intro: 'Una selecció de projectes on la tecnologia crea valor mesurable.',
+      visit: 'Visitar el lloc',
+      privateLabel: 'Accés privat',
+      privateHint: 'Disponible sota petició — no publicat per privacitat.',
+      gallery: 'Veure captures',
+      galleryClose: 'Tancar',
+      galleryPrev: 'Anterior',
+      galleryNext: 'Següent',
+      items: {
+        finai: {
+          name: 'Web de casament',
+          category: 'Web de casament',
+          desc: 'Web de casament amb un estil mediterrani net i elegant: compte enrere en directe, il·lustracions fetes a mà i tota la informació de la celebració en un sol lloc.',
+        },
+        melani: {
+          name: 'Centre Melani Costa',
+          category: 'Web professional',
+          desc: 'Lloc web per al centre de la Melani Costa, medallista olímpica, centrat en claredat i conversió.',
+        },
+        predicasa: {
+          name: 'Predicasa',
+          category: 'Aplicació amb IA',
+          desc: 'Plataforma que prediu preus d\'habitatge a Mallorca sobre una gran base de dades, detectant oportunitats i valorant si un preu és competitiu respecte al mercat.',
+        },
+      },
+    },
+    studio: {
+      eyebrow: 'L\'estudi',
+      whoTitle: 'Dos enginyers amb una obsessió: que la tecnologia treballi per al teu negoci.',
+      whoBody: 'Venim de l\'enginyeria i de gestionar projectes tècnics complexos, on l\'eficiència, la qualitat i el pensament estructurat ho són tot. Creiem que qualsevol empresa, sigui de la mida que sigui, hauria de poder aprofitar la tecnologia i la IA per ser més eficient i créixer.',
+      doTitle: 'Què fem',
+      doBody: 'No fem simplement webs. Resolem problemes de negoci amb tecnologia — i automatitzem amb IA sempre que aporta valor real.',
+      services: [
+        'Webs i landing pages',
+        'E-commerce',
+        'Aplicacions web a mida',
+        'Chatbots amb IA',
+        'Automatització de negoci',
+        'Integracions i IA',
+        'SEO i rendiment',
+        'Consultoria digital',
+      ],
+      values: [
+        { k: '01', t: 'Simplicitat', d: 'La millor solució sol ser la més simple que resol el problema del tot.' },
+        { k: '02', t: 'Velocitat', d: 'Lliuraments ràpids sense sacrificar la qualitat. El temps importa.' },
+        { k: '03', t: 'Fiabilitat', d: 'Programari robust i escalable, pensat amb mentalitat d\'enginyeria.' },
+        { k: '04', t: 'IA aplicada', d: 'La IA com a accelerador per construir millors solucions, més ràpid.' },
+      ],
+    },
+    contact: {
+      eyebrow: 'Contacte',
+      title: 'Tens un projecte en ment?',
+      body: 'Explica\'ns què necessites. Responem ràpid i parlem clar.',
+      cta: 'Escriu-nos',
+      or: 'o escriu-nos a',
+    },
+    footer: {
+      tagline: 'Estudi digital · Mallorca, Espanya',
+      rights: 'Tots els drets reservats.',
+      backTop: 'Tornar a dalt',
+    },
+  },
+
+  en: {
+    nav: {
+      work: 'Work',
+      studio: 'Studio',
+      contact: 'Contact',
+    },
+    hero: {
+      location: 'Mallorca — Digital studio',
+      titleLine1: 'We design and build',
+      titleLine2: 'digital solutions',
+      titleAccent: 'with intelligence.',
+      lead: 'We are a digital studio based in Mallorca. We combine engineering, design and Artificial Intelligence to solve real business problems — fast, and without unnecessary complexity.',
+      cta: 'Start a project',
+      scroll: 'Scroll',
+    },
+    work: {
+      eyebrow: 'Selected projects',
+      title: 'Recent work',
+      intro: 'A selection of projects where technology creates measurable value.',
+      visit: 'Visit site',
+      privateLabel: 'Private access',
+      privateHint: 'Available on request — not published for privacy.',
+      gallery: 'View screenshots',
+      galleryClose: 'Close',
+      galleryPrev: 'Previous',
+      galleryNext: 'Next',
+      items: {
+        finai: {
+          name: 'Wedding website',
+          category: 'Wedding website',
+          desc: 'A wedding site with a clean, classy Mediterranean style: a live countdown, hand-drawn illustrations and every celebration detail in one place.',
+        },
+        melani: {
+          name: 'Centro Melani Costa',
+          category: 'Professional website',
+          desc: 'Website for the centre of Melani Costa, Olympic medallist, focused on clarity and conversion.',
+        },
+        predicasa: {
+          name: 'Predicasa',
+          category: 'AI application',
+          desc: 'A platform that predicts housing prices in Mallorca over a large database, surfacing opportunities and telling you whether a price is competitive against the market.',
+        },
+      },
+    },
+    studio: {
+      eyebrow: 'The studio',
+      whoTitle: 'Two engineers with one obsession: making technology work for your business.',
+      whoBody: 'We come from engineering and from managing complex technical projects, where efficiency, quality and structured thinking are everything. We believe every company, whatever its size, should be able to leverage technology and AI to become more efficient and grow.',
+      doTitle: 'What we do',
+      doBody: 'We don\'t simply build websites. We solve business problems with technology — and automate with AI whenever it creates real value.',
+      services: [
+        'Websites & landing pages',
+        'E-commerce',
+        'Custom web apps',
+        'AI chatbots',
+        'Business automation',
+        'Integrations & AI',
+        'SEO & performance',
+        'Digital consulting',
+      ],
+      values: [
+        { k: '01', t: 'Simplicity', d: 'The best solution is usually the simplest one that fully solves the problem.' },
+        { k: '02', t: 'Speed', d: 'Fast delivery without sacrificing quality. Time matters.' },
+        { k: '03', t: 'Reliability', d: 'Robust, scalable software built with an engineering mindset.' },
+        { k: '04', t: 'Applied AI', d: 'AI as an accelerator to build better solutions, faster.' },
+      ],
+    },
+    contact: {
+      eyebrow: 'Contact',
+      title: 'Have a project in mind?',
+      body: 'Tell us what you need. We reply fast and speak plainly.',
+      cta: 'Get in touch',
+      or: 'or email us at',
+    },
+    footer: {
+      tagline: 'Digital studio · Mallorca, Spain',
+      rights: 'All rights reserved.',
+      backTop: 'Back to top',
+    },
+  },
+}
