@@ -5,6 +5,38 @@ import { projects } from '../../data/projects'
 import Lightbox from '../Lightbox/Lightbox'
 import './Works.css'
 
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/**
+ * Card thumbnail. Plays `video` if the project has one and it loads
+ * successfully; otherwise falls back to the static image. The video's
+ * own `poster` shows the same image until real frames are ready, so
+ * there's no separate loading state to juggle — only a genuine load
+ * failure (onError) switches to the plain <img>.
+ */
+function ProjectMedia({ video, image, name }) {
+  const [videoFailed, setVideoFailed] = useState(false)
+  const showVideo = video && !prefersReducedMotion && !videoFailed
+
+  return showVideo ? (
+    <video
+      className="project__media-img"
+      src={video}
+      poster={image}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      onError={() => setVideoFailed(true)}
+    />
+  ) : (
+    <img src={image} alt={name} loading="lazy" className="project__media-img" />
+  )
+}
+
 export default function Works() {
   const { t } = useLanguage()
   const ref = useScrollReveal({ stagger: 0.12 })
@@ -108,12 +140,7 @@ export default function Works() {
                     aria-label={`${t('work.gallery')} — ${name}`}
                   >
                     <span className="project__media-box">
-                      <img
-                        src={p.images[0]}
-                        alt={name}
-                        loading="lazy"
-                        className="project__media-img"
-                      />
+                      <ProjectMedia video={p.video} image={p.images[0]} name={name} />
                     </span>
                   </button>
                 </div>

@@ -1,7 +1,8 @@
 /* Portfolio projects. `key` maps into translations (work.items.<key>),
    which supplies the display name, category and description per language.
    `images` is the full gallery shown in the lightbox; the first entry is
-   also used as the card thumbnail. */
+   also used as the card thumbnail (or the poster/fallback for `video`,
+   when present — the card plays `video` instead if it loads). */
 export const projects = [
   {
     key: 'predicasa',
@@ -9,6 +10,7 @@ export const projects = [
     year: '2025',
     url: null, // private — only reachable with credentials
     private: true,
+    video: '/predicasa-video.mp4',
     images: [
       '/predicasa_main.png',
       '/predicasa2.png',
