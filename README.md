@@ -19,6 +19,25 @@ npm run build    # production build → dist/
 npm run preview  # preview the production build
 ```
 
+## Deployment (GitHub Pages)
+
+The site auto-deploys to **https://crisconh.github.io/balearstudio/** on every push
+to `main`, via [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+(`npm ci && npm run build`, then publishes `dist/`).
+
+One-time setup in the repo: **Settings → Pages → Build and deployment → Source →
+GitHub Actions**. Without this the workflow runs but nothing is served.
+
+Because it's a project page served from the `/balearstudio/` subpath:
+
+- `base: '/balearstudio/'` is set in [vite.config.js](vite.config.js). If the repo
+  is renamed, moved to a custom domain, or switched to a user site
+  (`crisconh.github.io`), update `base` to match (`'/new-name/'` or `'/'`).
+- Assets in `public/` must be referenced through Vite's base, not as bare
+  `/foo.png` (which would 404 on the subpath). [src/data/projects.js](src/data/projects.js)
+  does this with an `asset()` helper built on `import.meta.env.BASE_URL` — reuse it
+  for any new images or videos.
+
 ## Design system
 
 Pure monochrome. Defined as CSS variables in [src/styles/index.css](src/styles/index.css):

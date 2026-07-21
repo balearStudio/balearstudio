@@ -1,3 +1,9 @@
+/* Files live in public/ and are served from Vite's base path, which differs
+   between local dev (/) and the GitHub Pages deploy (/balearstudio/). Resolve
+   every public asset through this helper so the base prefix is always applied;
+   a bare "/foo.png" would 404 on the subpath deploy. */
+const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 /* Portfolio projects. `key` maps into translations (work.items.<key>),
    which supplies the display name, category and description per language.
    `images` is the full gallery shown in the lightbox; the first entry is
@@ -10,13 +16,13 @@ export const projects = [
     year: '2025',
     url: null, // private — only reachable with credentials
     private: true,
-    video: '/predicasa-video.mp4',
+    video: asset('/predicasa-video.mp4'),
     images: [
-      '/predicasa_main.png',
-      '/predicasa2.png',
-      '/predicasa3.png',
-      '/predicasa4.png',
-      '/predicasa5.png',
+      asset('/predicasa_main.png'),
+      asset('/predicasa2.png'),
+      asset('/predicasa3.png'),
+      asset('/predicasa4.png'),
+      asset('/predicasa5.png'),
     ],
   },
   {
@@ -25,7 +31,7 @@ export const projects = [
     year: '2026',
     url: 'https://centromelanicosta.com',
     private: false,
-    images: ['/melanicosta_main.png', '/melanicosta2.png'],
+    images: [asset('/melanicosta_main.png'), asset('/melanicosta2.png')],
   },
   {
     key: 'finai',
@@ -33,6 +39,6 @@ export const projects = [
     year: '2026',
     url: null, // kept private at the client's request
     private: true,
-    images: ['/finaivicenc_main.png', '/finaivicenc2.png'],
+    images: [asset('/finaivicenc_main.png'), asset('/finaivicenc2.png')],
   },
 ]
