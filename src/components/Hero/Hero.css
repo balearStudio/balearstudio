@@ -5,7 +5,7 @@
   align-items: flex-end;
   /* Height-aware padding: shrinks on short/wide viewports instead of a
      fixed rem value that can push the CTA below the fold. */
-  padding-block: clamp(5.5rem, 12svh, 9rem) clamp(2rem, 6svh, 3.5rem);
+  padding-block: clamp(5.5rem, 12svh, 9rem) clamp(1.25rem, 4svh, 2rem);
   overflow: hidden;
 }
 

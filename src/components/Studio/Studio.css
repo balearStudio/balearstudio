@@ -30,8 +30,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 5rem);
-  margin-top: clamp(4rem, 9vw, 7rem);
-  padding-top: clamp(3rem, 6vw, 4.5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: clamp(1.5rem, 2.5vw, 2.25rem);
   border-top: 1px solid var(--color-line-strong);
 }
 .studio__do-title {
@@ -72,7 +72,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(1.5rem, 3vw, 2.5rem);
-  margin-top: clamp(4rem, 9vw, 7rem);
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
 }
 .studio__value {
   border-top: 1px solid var(--color-line-strong);

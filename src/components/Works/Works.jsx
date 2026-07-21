@@ -10,8 +10,13 @@ export default function Works() {
   const ref = useScrollReveal({ stagger: 0.12 })
   const [openKey, setOpenKey] = useState(null)
   const [openIndex, setOpenIndex] = useState(0)
+  const [originRect, setOriginRect] = useState(null)
 
-  const openGallery = (key, index = 0) => {
+  // The lightbox always grows from the thumbnail image, whether the click
+  // came from the image itself or the "Ver capturas" text button.
+  const openGallery = (key, index, triggerEl) => {
+    const box = triggerEl?.closest('.project')?.querySelector('.project__media-box')
+    setOriginRect(box ? box.getBoundingClientRect() : null)
     setOpenKey(key)
     setOpenIndex(index)
   }
@@ -87,7 +92,7 @@ export default function Works() {
                         <button
                           type="button"
                           className="project__gallery-btn"
-                          onClick={() => openGallery(p.key, 0)}
+                          onClick={(e) => openGallery(p.key, 0, e.currentTarget)}
                         >
                           {t('work.gallery')}
                           <span className="project__gallery-count">{p.images.length}</span>
@@ -99,7 +104,7 @@ export default function Works() {
                   <button
                     type="button"
                     className="project__media"
-                    onClick={() => openGallery(p.key, 0)}
+                    onClick={(e) => openGallery(p.key, 0, e.currentTarget)}
                     aria-label={`${t('work.gallery')} — ${name}`}
                   >
                     <span className="project__media-box">
@@ -123,6 +128,7 @@ export default function Works() {
           images={activeProject.images}
           name={t(`work.items.${activeProject.key}.name`)}
           index={openIndex}
+          originRect={originRect}
           onClose={closeGallery}
           onPrev={() =>
             setOpenIndex((i) => (i - 1 + activeProject.images.length) % activeProject.images.length)

@@ -20,7 +20,7 @@
   /* Spacing / layout ---------------------------------------- */
   --maxw: 1280px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
-  --section-pad: clamp(3.5rem, 6vw, 5.5rem);
+  --section-pad: clamp(2.5rem, 4.5vw, 4rem);
 
   /* Motion -------------------------------------------------- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -115,8 +115,17 @@ button {
   background: var(--color-line-strong);
 }
 
-/* Reveal-on-scroll baseline (GSAP toggles the animation) --- */
-.reveal {
+/* Reveal-on-scroll baseline (GSAP toggles the animation) ---
+   Grouped reveals (data-reveal-group) animate the CONTAINER's
+   children, not the container itself — so the hidden-by-default
+   baseline must target the same children, or the container is
+   left at opacity:0 forever (GSAP never touches it) while its
+   now-visible children render invisible inside it. */
+.reveal:not([data-reveal-group]) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+[data-reveal-group] > * {
   opacity: 0;
   transform: translateY(28px);
 }

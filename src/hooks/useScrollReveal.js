@@ -26,6 +26,7 @@ export function useScrollReveal(opts = {}) {
     ).matches
     if (prefersReduced) {
       gsap.set(root.querySelectorAll('.reveal'), { opacity: 1, y: 0 })
+      gsap.set(root.querySelectorAll('[data-reveal-group] > *'), { opacity: 1, y: 0 })
       return
     }
 
