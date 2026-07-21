@@ -4,6 +4,7 @@ import Works from './components/Works/Works'
 import Studio from './components/Studio/Studio'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
+import Chat from './components/Chat/Chat'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Chat />
     </>
   )
 }

@@ -91,6 +91,16 @@ export const translations = {
       rights: 'Todos los derechos reservados.',
       backTop: 'Volver arriba',
     },
+    chat: {
+      title: 'Asistente balearSTUDIO',
+      subtitle: 'Normalmente respondemos al instante',
+      launch: 'Abrir chat',
+      close: 'Cerrar chat',
+      placeholder: 'Escribe tu mensaje…',
+      send: 'Enviar',
+      greeting: '¡Hola! 👋 Soy el asistente de balearSTUDIO. ¿En qué puedo ayudarte?',
+      error: 'Ups, algo ha fallado. Inténtalo de nuevo o escríbenos a info@balearstudio.com.',
+    },
   },
 
   ca: {
@@ -172,6 +182,16 @@ export const translations = {
       rights: 'Tots els drets reservats.',
       backTop: 'Tornar a dalt',
     },
+    chat: {
+      title: 'Assistent balearSTUDIO',
+      subtitle: 'Normalment responem a l\'instant',
+      launch: 'Obrir xat',
+      close: 'Tancar xat',
+      placeholder: 'Escriu el teu missatge…',
+      send: 'Enviar',
+      greeting: 'Hola! 👋 Sóc l\'assistent de balearSTUDIO. En què et puc ajudar?',
+      error: 'Ui, alguna cosa ha fallat. Torna-ho a provar o escriu-nos a info@balearstudio.com.',
+    },
   },
 
   en: {
@@ -252,6 +272,16 @@ export const translations = {
       tagline: 'Digital studio · Mallorca, Spain',
       rights: 'All rights reserved.',
       backTop: 'Back to top',
+    },
+    chat: {
+      title: 'balearSTUDIO assistant',
+      subtitle: 'We usually reply instantly',
+      launch: 'Open chat',
+      close: 'Close chat',
+      placeholder: 'Type your message…',
+      send: 'Send',
+      greeting: 'Hi! 👋 I\'m the balearSTUDIO assistant. How can I help?',
+      error: 'Oops, something went wrong. Please try again or email us at info@balearstudio.com.',
     },
   },
 }
