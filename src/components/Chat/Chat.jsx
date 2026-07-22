@@ -54,6 +54,14 @@ export default function Chat() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  // Lock body scroll while open — the panel goes full-screen on mobile,
+  // so the page scrolling underneath would otherwise fight it.
+  useEffect(() => {
+    if (!open) return
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
   async function send(e) {
     e?.preventDefault()
     const text = input.trim()

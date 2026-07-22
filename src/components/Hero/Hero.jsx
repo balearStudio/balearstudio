@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useLanguage } from '../../i18n/LanguageContext'
 import './Hero.css'
@@ -7,7 +7,12 @@ export default function Hero() {
   const { t } = useLanguage()
   const root = useRef(null)
 
-  useEffect(() => {
+  // useLayoutEffect (not useEffect) — it runs synchronously before the
+  // browser's first paint, so GSAP's hidden "from" state is what actually
+  // gets shown first. useEffect runs after paint, which meant the browser
+  // painted the raw, fully-visible text once, then GSAP yanked it hidden
+  // right before animating back in: a visible flash before the reveal.
+  useLayoutEffect(() => {
     const prefersReduced = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches

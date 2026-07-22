@@ -58,6 +58,40 @@
   pointer-events: auto;
 }
 
+/* On phones a floating card fights for space against the browser's own
+   chrome (address bar, on-screen keyboard) — 100vh-based sizing doesn't
+   account for either, which is exactly what was overflowing. A full-screen
+   sheet sidesteps the arithmetic entirely and is the standard mobile
+   pattern for chat widgets. 100dvh (not vh/svh) so it also resizes when
+   the keyboard opens, keeping the composer visible above it. */
+@media (max-width: 640px) {
+  .chat__panel {
+    position: fixed;
+    inset: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    transform: translateY(100%);
+    transform-origin: center;
+  }
+  .chat__panel.is-open {
+    transform: none;
+  }
+  /* The panel's own header close button covers this; hide the FAB
+     underneath instead of stacking a second close control. */
+  .chat__panel.is-open ~ .chat__launch {
+    display: none;
+  }
+  .chat__head {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  .chat__form {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
 /* Header ---------------------------------------------------- */
 .chat__head {
   display: flex;
