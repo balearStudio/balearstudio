@@ -1,7 +1,7 @@
-/* Files live in public/ and are served from Vite's base path, which differs
-   between local dev (/) and the GitHub Pages deploy (/balearstudio/). Resolve
-   every public asset through this helper so the base prefix is always applied;
-   a bare "/foo.png" would 404 on the subpath deploy. */
+/* Files live in public/ and are served from Vite's base path (currently `/`,
+   the root of balearstudio.com). Resolve every public asset through this helper
+   so the base prefix is always applied and the paths keep working if the site is
+   ever served from a subfolder again. */
 const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
 /* Portfolio projects. `key` maps into translations (work.items.<key>),

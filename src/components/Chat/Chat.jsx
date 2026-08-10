@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import './Chat.css'
 
-// Cloudflare Worker backing the assistant. It is CORS-locked to the
-// production origin (https://crisconh.github.io), so requests only succeed
-// from the deployed site — not from localhost during `npm run dev`.
+// Cloudflare Worker backing the assistant. It is CORS-locked to an allowlist of
+// origins held in the Worker itself: the balearstudio.com apex and www, plus
+// http://localhost:5173 for `npm run dev`. Requests from any other origin are
+// blocked by the browser, so a new preview URL or dev port needs adding there.
 const WORKER_URL = 'https://icy-sunset-3812.spanishairsoft.workers.dev'
 
 /* The Worker's success shape isn't guaranteed, so pull the reply text out of
