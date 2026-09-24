@@ -37,8 +37,11 @@ function ProjectMedia({ video, image, name }) {
   )
 }
 
+// Placeholder projects have no media yet (P2); keep them out of the list until they do.
+const visibleProjects = projects.filter((p) => p.media.gallery.length > 0)
+
 export default function Works() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const ref = useScrollReveal({ stagger: 0.12 })
   const [openKey, setOpenKey] = useState(null)
   const [openIndex, setOpenIndex] = useState(0)
@@ -46,15 +49,16 @@ export default function Works() {
 
   // The lightbox always grows from the thumbnail image, whether the click
   // came from the image itself or the "Ver capturas" text button.
-  const openGallery = (key, index, triggerEl) => {
+  const openGallery = (slug, index, triggerEl) => {
     const box = triggerEl?.closest('.project')?.querySelector('.project__media-box')
     setOriginRect(box ? box.getBoundingClientRect() : null)
-    setOpenKey(key)
+    setOpenKey(slug)
     setOpenIndex(index)
   }
   const closeGallery = () => setOpenKey(null)
 
-  const activeProject = projects.find((p) => p.key === openKey)
+  const activeProject = visibleProjects.find((p) => p.slug === openKey)
+  const gallery = activeProject?.media.gallery
 
   return (
     <section className="works section" id="work" ref={ref}>
@@ -66,16 +70,14 @@ export default function Works() {
         </header>
 
         <ul className="works__list">
-          {projects.map((p) => {
-            const name = t(`work.items.${p.key}.name`)
-            const cat = t(`work.items.${p.key}.category`)
-            const desc = t(`work.items.${p.key}.desc`)
-            const hasGallery = p.images.length > 1
+          {visibleProjects.map((p, i) => {
+            const { name, category: cat, description: desc } = p.copy[lang]
+            const hasGallery = p.media.gallery.length > 1
 
             return (
-              <li className="works__item reveal" key={p.key}>
+              <li className="works__item reveal" key={p.slug}>
                 <div className="project">
-                  <div className="project__index">{p.index}</div>
+                  <div className="project__index">{String(i + 1).padStart(2, '0')}</div>
 
                   <div className="project__main">
                     <div className="project__heading">
@@ -95,7 +97,7 @@ export default function Works() {
                     <div className="project__meta">
                       <span className="project__category">{cat}</span>
 
-                      {p.private ? (
+                      {p.status === 'private' ? (
                         <span className="project__lock" tabIndex={0}>
                           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="1.6" />
@@ -106,7 +108,7 @@ export default function Works() {
                             {t('work.privateHint')}
                           </span>
                         </span>
-                      ) : (
+                      ) : p.status === 'live' ? (
                         <a
                           href={p.url}
                           target="_blank"
@@ -118,16 +120,16 @@ export default function Works() {
                             <path d="M4 12L12 4M6 4h6v6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </a>
-                      )}
+                      ) : null}
 
                       {hasGallery && (
                         <button
                           type="button"
                           className="project__gallery-btn"
-                          onClick={(e) => openGallery(p.key, 0, e.currentTarget)}
+                          onClick={(e) => openGallery(p.slug, 0, e.currentTarget)}
                         >
                           {t('work.gallery')}
-                          <span className="project__gallery-count">{p.images.length}</span>
+                          <span className="project__gallery-count">{p.media.gallery.length}</span>
                         </button>
                       )}
                     </div>
@@ -136,11 +138,15 @@ export default function Works() {
                   <button
                     type="button"
                     className="project__media"
-                    onClick={(e) => openGallery(p.key, 0, e.currentTarget)}
+                    onClick={(e) => openGallery(p.slug, 0, e.currentTarget)}
                     aria-label={`${t('work.gallery')} — ${name}`}
                   >
                     <span className="project__media-box">
-                      <ProjectMedia video={p.video} image={p.images[0]} name={name} />
+                      <ProjectMedia
+                        video={p.media.video}
+                        image={p.media.poster ?? p.media.cover}
+                        name={name}
+                      />
                     </span>
                   </button>
                 </div>
@@ -152,15 +158,13 @@ export default function Works() {
 
       {activeProject && (
         <Lightbox
-          images={activeProject.images}
-          name={t(`work.items.${activeProject.key}.name`)}
+          images={gallery}
+          name={activeProject.copy[lang].name}
           index={openIndex}
           originRect={originRect}
           onClose={closeGallery}
-          onPrev={() =>
-            setOpenIndex((i) => (i - 1 + activeProject.images.length) % activeProject.images.length)
-          }
-          onNext={() => setOpenIndex((i) => (i + 1) % activeProject.images.length)}
+          onPrev={() => setOpenIndex((i) => (i - 1 + gallery.length) % gallery.length)}
+          onNext={() => setOpenIndex((i) => (i + 1) % gallery.length)}
         />
       )}
     </section>

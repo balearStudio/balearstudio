@@ -1,0 +1,308 @@
+# balearstudio.com — portfolio refresh + SEO plan
+
+Working doc. **Do one task per session**, and run `/clear` between sessions.
+
+**To start a session:** `Read PLAN.md, then do Task <ID>.`
+**To finish one:** tick the box, write anything unexpected under *Notes*, commit.
+Only tick a box once that task's **Done when** check actually passes.
+
+Written 2026-09-24 after reviewing the repo and the live site.
+
+---
+
+## Where things stand today (audit)
+
+**Stack.** React 18 + Vite 5 SPA, GSAP, deployed to GitHub Pages at the root of
+`balearstudio.com`. There is one route, and the three languages (ES/CA/EN) switch
+client-side, with the choice saved in `localStorage`.
+
+**Portfolio.** [src/data/projects.js](src/data/projects.js) holds 3 projects
+(predicasa, melani, finai). Their copy is in `work.items.*` in
+[src/i18n/translations.js](src/i18n/translations.js), and they render as list rows in
+[src/components/Works/Works.jsx](src/components/Works/Works.jsx) with a lightbox gallery.
+- Predicasa is flagged `private`, but predicasa.com is now public.
+- The screenshots are unoptimised PNGs of up to 1.7 MB each (~8.6 MB in `public/`).
+  The Predicasa card video uses `preload="auto"`.
+- A list of rows doesn't scale well to 8 projects, and projects have no pages of their own.
+
+**SEO gaps (ranked by impact).**
+1. **Search engines only ever see the Spanish page.** The CA and EN versions have no URLs, so
+   they can't be indexed, and there is no `hreflang`.
+2. **The HTML is an empty SPA shell** (`<div id="root">`). All the content comes from JS. Google
+   can render it, but other crawlers, link previews and AI crawlers see nothing.
+3. `robots.txt` and `sitemap.xml` both return **404**.
+4. There is **no structured data**: no Organization/LocalBusiness or WebSite JSON-LD.
+5. There is **one indexable URL for the whole site**, so there's nothing to rank for "diseño web
+   Mallorca" + sector, and projects have no case-study pages.
+6. Performance costs: heavy PNGs, the autoplay video preloads, and Google Fonts are loaded as a
+   render-blocking stylesheet.
+7. Small issues: no `apple-touch-icon` or manifest; `aria-label`s are hard-coded in Spanish in
+   Header; the footer year is hard-coded.
+
+**Prior art to reuse.** `balear-ewf`'s `site-template` (e.g. `../sa-pamboleria`) already solves
+issue 1 and issue 2. It uses a hand-rolled prerender (`react-dom/server` +
+`scripts/prerender.mjs`) with `/es/` and `/en/` subpaths, per-page `<title>`, canonical,
+`hreflang`, OG, sitemap and robots. **Copy that approach; don't invent a new one.**
+Playwright is installed in `../balear-ewf` (`plugins/ewf/scripts/capture.mjs`).
+ffmpeg is **not** installed (use the `ffmpeg-static` npm package if a task needs it).
+
+---
+
+## Projects in scope
+
+Leave out for now: **Catiana Bauçà (dentist)** and **Sa Pamboleria**.
+
+All the clients listed here have agreed to be named and shown (D2).
+
+| Slug | Project | Capture from | Status | Link on card |
+|---|---|---|---|---|
+| `predicasa` | Predicasa: AI house-price prediction | https://predicasa.com (the app is behind a login; see P2) | `live` | predicasa.com |
+| `darrod-tennis` | Darrod Tennis Academy | https://darrodtennis.dev.balearstudio.com/es/ | `preview` | none: "Coming soon" |
+| `a2-dental` | A2 Dental, dental clinic in Portals | https://dental-a2.dev.balearstudio.com/ | `preview` | none: "Coming soon" |
+| `rmelendi` | RMelendi, football content creator (brand-collab site) | https://balearstudio.github.io/rmelendi/ ¹ | `preview` | none: "Coming soon" |
+| `panes-patagonia` | Panes Patagonia, artisan bakery for hospitality | http://panespatagonia.dev.balearstudio.com/ ² | `preview` | none: "Coming soon" |
+| `melani` | Centro Melani Costa | https://centromelanicosta.com | `live` | yes |
+| `finai` | Wedding website | (keep existing screenshots) | `private` (client asked) | no |
+
+¹ `rmelendi.dev.balearstudio.com` resolves (wildcard DNS) but returns a 404 with no HTTPS certificate.
+The repo's Pages custom domain was never set; `/ewf:preview` in balear-ewf handles that. rmelendi.com
+still serves the client's old WordPress site. ² panespatagonia.com is the client's old site, not ours.
+
+**When a preview site launches**, set its `status` to `live` and fill in its `url`. The card then
+shows "Visit site" and the case-study page (S3) links out.
+
+---
+
+## Decisions (owner, 2026-09-24)
+
+- [x] **D1. Unreleased sites:** screenshots **and** video, plus a "Coming soon" badge. Never link
+  to `.dev` / github.io preview URLs; they are `noindex` and temporary.
+- [x] **D2. Client permission:** every client in the table has agreed. The wedding site stays
+  anonymous as it is today.
+- [x] **D3. Predicasa demo account:** it exists. The credentials are in `.env.local` (gitignored,
+  local to the owner's machine, **never committed**). **When P2 is done, tell the owner so
+  they can delete the account.**
+- [x] **D4. Featured order:** Predicasa, Darrod Tennis, A2 Dental.
+- [ ] **D5. Google Search Console and Google Business Profile access:** still open. It only
+  blocks S6.
+
+---
+
+## Recommended order
+
+```
+P1 ─┬─> P2 (media) ──┐
+    ├─> P3 (copy) ───┼─> P4 (Works redesign) ──> S3 (case-study pages)
+    │                │
+S1 (quick wins, independent)     S2 (prerender + language URLs) ──> S3 ──> S4 ──> S5 ──> S6
+```
+
+P1 and S1 can go first, in parallel. **S2 must land before S3.** Project pages need real
+URLs, and S2 creates the routing and prerender that they rely on.
+
+---
+
+## Track P — portfolio
+
+### [x] P1. Project data model
+
+**Goal:** make one structure the source of truth for every project, so later tasks only add data.
+
+- Replace `src/data/projects.js` with a richer schema:
+  `slug, order, featured, year, status ('live' | 'preview' | 'private'), url, sector,
+  services[], stack[], media: { cover, video?, poster?, gallery[] }, copy: { es, ca, en }`.
+  `copy` holds `name`, `category`, `summary` (1 line), `description` (2–3 lines), and optional
+  `challenge / solution / result` for the case-study pages in S3.
+- Move each project's copy out of `translations.js` and next to its data
+  (`src/data/projects/<slug>.js` plus an `index.js` that sorts by `order`). The UI labels stay
+  in `translations.js`.
+- Media convention, which P2 relies on: `public/projects/<slug>/cover.{avif,webp}`,
+  `gallery-01.{avif,webp}`, …, `video.mp4` / `video.webm`, `poster.webp`.
+  Keep the `asset()` helper.
+- Port the 3 existing projects and add placeholder entries for the 4 new ones
+  (`status` per the table above, copy marked `TODO`). Remove `private: true` from Predicasa.
+- Update `Works.jsx` just enough to render from the new shape. **No visual change** in this task.
+
+**Done when:** `npm run build` passes, and the page looks and behaves exactly as before for the
+3 existing projects, including the gallery.
+
+### [ ] P2. Capture and optimise project media
+
+**Goal:** give every project light, consistent screenshots, plus a short video where it helps.
+
+- Write `scripts/capture-projects.mjs`, modelled on `../balear-ewf/plugins/ewf/scripts/capture.mjs`.
+  For each project with a URL, it takes a 1440×900 cover, 2–4 gallery shots (key sections plus one
+  390 px mobile shot) and optionally a 6–10 s scroll video.
+- Add an optimise step (`sharp` for AVIF + WebP at 1600w and 800w; `ffmpeg-static` for video:
+  H.264 MP4 + WebM, no audio, ~1280w, **≤ 1.5 MB each**).
+- Output goes to `public/projects/<slug>/` following P1's convention. Delete the old root PNGs
+  once they're replaced.
+- **Predicasa video (behind the login).** Playwright can sign in and record:
+  - The credentials are already in `.env.local` (gitignored by `*.local`) as
+    `PREDICASA_EMAIL` / `PREDICASA_PASSWORD`. Read them from there. **Never commit them, log
+    them, or copy them into any other file.**
+  - Use `browser.newContext({ recordVideo: { dir, size: { width: 1280, height: 800 } } })`,
+    log in, then play a scripted journey: search an address → view the prediction → view the
+    "cheap/expensive" verdict. Add `waitForTimeout` pauses so it's watchable. Trim the login out
+    with ffmpeg (`-ss`).
+  - It's a demo account (D3), but still check every frame for personal data before publishing.
+  - Fallback if scripting is fragile: someone records the screen by hand (Win+Alt+R or OBS) and
+    this task only trims and encodes the file.
+- **Videos for the preview projects too (D1):** Darrod Tennis, A2 Dental, RMelendi and Panes
+  Patagonia each get a short scroll video, captured from the URLs in the table above.
+  Dismiss cookie banners and the like before recording.
+- Wedding (`finai`) is private, so keep its existing screenshots and only re-encode them.
+
+**Done when:** every project has a cover and a gallery under `public/projects/<slug>/`, every
+project except `finai` has a video, no image is over ~250 KB (AVIF/WebP), each video is
+≤ 1.5 MB, and the script can be run again.
+**Then:** tell the owner that the Predicasa demo account can be deleted, and delete
+`.env.local` (or blank the Predicasa lines in it).
+
+### [ ] P3. Project copy (ES / CA / EN)
+
+**Goal:** real content for the 4 new projects and a refresh of the 3 existing ones.
+
+- Sources: each live or preview site, `../balear-ewf/references/<slug>/notes.md`, and the client
+  briefs in the client repos. Follow the voice in [company.md](company.md): outcomes over
+  features, no buzzwords.
+- For each project: name, category, a 1-line summary, a 2–3 line description, services,
+  and stack. For the featured ones (D4), also challenge / solution / result for S3.
+- Write each description with **searchable terms** in mind, without keyword stuffing,
+  e.g. "web para clínica dental en Calvià", "web para academia de tenis en Mallorca".
+
+**Done when:** no `TODO` copy is left in `src/data/projects/`, and all three languages are filled.
+
+### [ ] P4. Redesign the Works section
+
+**Goal:** show 7+ projects clearly while keeping the monochrome, Swiss-minimal identity.
+
+- Suggested layout: **3 featured projects as large cards** (media first, autoplay muted video on
+  hover or in view, greyscale → colour, as today), then a **compact grid of the rest**.
+  Optionally add a sector filter (Web / E-commerce / AI app) if it reads well.
+  Show a status badge based on `status` (D1): `live` shows "Visit site"; `preview` shows a
+  "Coming soon" badge and no link; `private` shows the existing lock + tooltip. The featured
+  order is Predicasa, Darrod Tennis, A2 Dental (D4).
+- Use `<picture>` with AVIF/WebP + `srcset`/`sizes`, explicit `width`/`height` (no layout shift),
+  and `loading="lazy"` below the fold. Videos use `preload="none"` + poster and start playing
+  through an IntersectionObserver. Keep `prefers-reduced-motion` support.
+- Reuse the Lightbox as it is. Each card also gets a "View project" link to its case-study page,
+  which S3 fills in (render it only once the route exists, or add it in S3).
+- Check it on mobile at 390 px, and on a tablet.
+
+**Done when:** all projects render in 3 languages with no console errors, a Lighthouse
+mobile check of the page shows no CLS regression, and the owner signs off on the look.
+
+---
+
+## Track S — SEO
+
+### [ ] S1. Technical SEO quick wins (independent, can go first)
+
+- Add `public/robots.txt` (allow all + `Sitemap: https://balearstudio.com/sitemap.xml`) and a
+  static `public/sitemap.xml` with the home URL. S2 replaces it with a generated one.
+- Put JSON-LD in `index.html`: `Organization` + `ProfessionalService`/`LocalBusiness`
+  (name, url, logo, email `info@balearstudio.com`, `areaServed: Mallorca / Illes Balears`,
+  address locality, `sameAs` for any socials), plus `WebSite`.
+- Add `apple-touch-icon` (180 px PNG), `site.webmanifest` and `theme-color`.
+- Fonts: self-host Space Grotesk (woff2, `font-display: swap`, preload the main weight) instead
+  of the render-blocking Google Fonts stylesheet.
+- Add `public/404.html` (GitHub Pages serves it).
+- Fix the hard-coded Spanish `aria-label`s in Header and translate them.
+
+**Done when:** `/robots.txt` and `/sitemap.xml` return 200 after deploy, the JSON-LD passes
+Google's Rich Results Test / validator.schema.org, and Lighthouse SEO is 100.
+
+### [ ] S2. Prerender + real URLs per language
+
+**Goal:** every language has its own crawlable, fully rendered HTML page.
+
+- URLs: `/` (ES, default), `/ca/`, `/en/`. Recommend keeping Spanish at the root so the existing
+  indexed URL doesn't change.
+- Port the `site-template` approach from `../sa-pamboleria` (`scripts/prerender.mjs`, SSR entry,
+  `react-dom/server`). At build time it writes one `index.html` per language, each with its own
+  `<html lang>`, `<title>`, meta description, canonical, `hreflang` alternates (+ `x-default`),
+  `og:locale`/`og:url`, and JSON-LD.
+- The language comes from the URL, not from `localStorage`. The LanguageSwitcher becomes
+  plain `<a href>` links. Keep an optional one-time redirect based on browser language, but
+  **never redirect crawlers** (only do it on the client, and only when nothing has been stored yet).
+- Guard SSR against `window`, `matchMedia`, GSAP and the Chat widget (render them client-only
+  or use a `typeof window` check). Use `hydrateRoot` on the client.
+- Generate `sitemap.xml` (with `xhtml:link` alternates) and `robots.txt` during the build,
+  replacing S1's static files.
+- Write per-language titles and descriptions aimed at the search terms, e.g.
+  ES "Diseño web y soluciones con IA en Mallorca | balearSTUDIO".
+
+**Done when:** `curl https://balearstudio.com/en/` returns HTML that already contains the
+English hero and project copy (no JS needed), hreflang is valid in all 3 pages, there are no
+hydration warnings in the console, and GitHub Pages serves `/ca/` and `/en/` correctly.
+
+### [ ] S3. Case-study pages per project (needs S2 + P1; better after P2/P3)
+
+**Goal:** one indexable page per project, which ranks for sector searches and gives the portfolio depth.
+
+- Routes: `/proyectos/<slug>/`, `/ca/projectes/<slug>/` and `/en/work/<slug>/`, prerendered for
+  every non-private project.
+- Page content: hero media, summary, sector/services/stack, challenge → solution → result,
+  gallery, a link to the site (if `status: live`), a "next project" link, and a contact CTA.
+- Each page gets its own title, description, OG image (the project cover), canonical, hreflang,
+  `CreativeWork` JSON-LD with `creator` = balearSTUDIO, and `BreadcrumbList`.
+- Cards in Works link to these pages. Add the pages to the sitemap.
+
+**Done when:** every public project has 3 prerendered language pages listed in the sitemap, and
+Rich Results Test passes on one of them.
+
+### [ ] S4. Performance pass
+
+- Run Lighthouse mobile against `npm run preview` for home + one case study, aiming for
+  **≥ 95 Perf / 100 SEO / ≥ 95 A11y**, and fix whatever it flags.
+- Likely fixes: lazy-load the Chat widget (dynamic `import()` on first click), load GSAP
+  ScrollTrigger only where needed, check that the LCP element is text rather than media,
+  and prefetch the case-study pages on hover.
+- Note the before and after scores here.
+
+### [ ] S5. Content for search
+
+**Goal:** give the home page text that matches what local clients actually search for.
+
+- Target terms (validate with Search Console data once S6 is done): *diseño web Mallorca,
+  desarrollo web Palma, agencia web Mallorca, chatbot IA empresas Mallorca, tienda online
+  Mallorca*, plus the CA and EN equivalents.
+- Replace the flat services list in [Studio.jsx](src/components/Studio/Studio.jsx) with short
+  service blocks (H3 + 1–2 sentences each), plus a "sectors we work with" line that links to
+  the matching case studies (restaurants, clinics, sports, …).
+- Optional: a short FAQ (price ranges, timelines, maintenance) with `FAQPage` JSON-LD.
+- Keep it concise and on-brand. This must not turn into an SEO landing-page farm.
+
+### [ ] S6. Off-site setup (mostly manual, owner-led; needs D5)
+
+- Verify `balearstudio.com` in **Google Search Console** and Bing Webmaster Tools, and submit
+  the sitemap.
+- Create or claim a **Google Business Profile** (Mallorca, "Diseñador de sitios web"), with the
+  same name, email and URL used in the JSON-LD.
+- Add a **"Web: balearSTUDIO" footer credit link** on every client site we built, where the
+  client agrees. RMelendi's preview already mentions balearstudio. These links are the easiest
+  backlinks we can get.
+- Add social profiles to `sameAs` in the JSON-LD.
+- Re-check indexing and queries in Search Console 2–4 weeks after S2 and S3 ship.
+
+---
+
+## Notes
+
+_(Add anything surprising found during a task here.)_
+
+**P1 (2026-09-24)**
+- **One intentional visual change:** Predicasa is now `status: 'live'` with `url: https://predicasa.com`
+  (the task says to drop `private`), so its card shows the "Visit site" link and title link instead of
+  the lock badge. Everything else on the page is unchanged.
+- The 4 new projects are placeholders (`copy` = `TODO`, empty `media`). `Works.jsx` filters out
+  projects whose `media.gallery` is empty, so they don't render until P2 adds media. P4 should
+  replace that filter with proper handling of the `preview` status ("Coming soon" badge).
+- Existing media still points at the old root PNGs / `predicasa-video.mp4`; P2 moves it to
+  `public/projects/<slug>/`. `media.gallery` is the full lightbox list (it includes the cover as
+  its first entry, as before); `media.cover` is only the card thumbnail.
+- `services` / `stack` are empty for all projects (P3 fills them; not guessed here).
+- The `asset()` helper moved to `src/data/asset.js`. `sector` values: `web | ecommerce | ai-app`.
+- `work.items.*` was removed from `translations.js`; UI labels (`work.visit`, etc.) stay.
+- `summary` for the 3 existing projects is a new short line I wrote in ES/CA/EN; review it in P3.

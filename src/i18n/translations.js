@@ -38,23 +38,6 @@ export const translations = {
       galleryClose: 'Cerrar',
       galleryPrev: 'Anterior',
       galleryNext: 'Siguiente',
-      items: {
-        finai: {
-          name: 'Web de boda',
-          category: 'Web de boda',
-          desc: 'Web de boda con un estilo mediterráneo limpio y elegante: cuenta atrás en directo, ilustraciones hechas a mano y toda la información de la celebración en un solo lugar.',
-        },
-        melani: {
-          name: 'Centro Melani Costa',
-          category: 'Web profesional',
-          desc: 'Sitio web para el centro de Melani Costa, medallista olímpica, centrado en claridad y conversión.',
-        },
-        predicasa: {
-          name: 'Predicasa',
-          category: 'Aplicación con IA',
-          desc: 'Plataforma que predice precios de vivienda en Mallorca sobre una gran base de datos, detectando oportunidades y valorando si un precio es competitivo frente al mercado.',
-        },
-      },
     },
     studio: {
       eyebrow: 'El estudio',
@@ -90,6 +73,14 @@ export const translations = {
       tagline: 'Estudio digital · Mallorca, España',
       rights: 'Todos los derechos reservados.',
       backTop: 'Volver arriba',
+    },
+    a11y: {
+      navMain: 'Principal',
+      navMobile: 'Móvil',
+      menuOpen: 'Abrir menú',
+      menuClose: 'Cerrar menú',
+      language: 'Idioma',
+      home: 'balearSTUDIO — inicio',
     },
     chat: {
       title: 'Asistente balearSTUDIO',
@@ -129,23 +120,6 @@ export const translations = {
       galleryClose: 'Tancar',
       galleryPrev: 'Anterior',
       galleryNext: 'Següent',
-      items: {
-        finai: {
-          name: 'Web de casament',
-          category: 'Web de casament',
-          desc: 'Web de casament amb un estil mediterrani net i elegant: compte enrere en directe, il·lustracions fetes a mà i tota la informació de la celebració en un sol lloc.',
-        },
-        melani: {
-          name: 'Centre Melani Costa',
-          category: 'Web professional',
-          desc: 'Lloc web per al centre de la Melani Costa, medallista olímpica, centrat en claredat i conversió.',
-        },
-        predicasa: {
-          name: 'Predicasa',
-          category: 'Aplicació amb IA',
-          desc: 'Plataforma que prediu preus d\'habitatge a Mallorca sobre una gran base de dades, detectant oportunitats i valorant si un preu és competitiu respecte al mercat.',
-        },
-      },
     },
     studio: {
       eyebrow: 'L\'estudi',
@@ -181,6 +155,14 @@ export const translations = {
       tagline: 'Estudi digital · Mallorca, Espanya',
       rights: 'Tots els drets reservats.',
       backTop: 'Tornar a dalt',
+    },
+    a11y: {
+      navMain: 'Principal',
+      navMobile: 'Mòbil',
+      menuOpen: 'Obrir el menú',
+      menuClose: 'Tancar el menú',
+      language: 'Idioma',
+      home: 'balearSTUDIO — inici',
     },
     chat: {
       title: 'Assistent balearSTUDIO',
@@ -220,23 +202,6 @@ export const translations = {
       galleryClose: 'Close',
       galleryPrev: 'Previous',
       galleryNext: 'Next',
-      items: {
-        finai: {
-          name: 'Wedding website',
-          category: 'Wedding website',
-          desc: 'A wedding site with a clean, classy Mediterranean style: a live countdown, hand-drawn illustrations and every celebration detail in one place.',
-        },
-        melani: {
-          name: 'Centro Melani Costa',
-          category: 'Professional website',
-          desc: 'Website for the centre of Melani Costa, Olympic medallist, focused on clarity and conversion.',
-        },
-        predicasa: {
-          name: 'Predicasa',
-          category: 'AI application',
-          desc: 'A platform that predicts housing prices in Mallorca over a large database, surfacing opportunities and telling you whether a price is competitive against the market.',
-        },
-      },
     },
     studio: {
       eyebrow: 'The studio',
@@ -272,6 +237,14 @@ export const translations = {
       tagline: 'Digital studio · Mallorca, Spain',
       rights: 'All rights reserved.',
       backTop: 'Back to top',
+    },
+    a11y: {
+      navMain: 'Main',
+      navMobile: 'Mobile',
+      menuOpen: 'Open menu',
+      menuClose: 'Close menu',
+      language: 'Language',
+      home: 'balearSTUDIO — home',
     },
     chat: {
       title: 'balearSTUDIO assistant',
