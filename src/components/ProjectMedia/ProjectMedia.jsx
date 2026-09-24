@@ -7,13 +7,15 @@ import './ProjectMedia.css'
  * layer, so the box never has an empty state. If the project has a video it
  * is laid over the image: it loads nothing until scrolled into view
  * (preload="none"), plays while at least half visible and pauses when it
- * leaves, and only fades in once frames are actually playing.
+ * leaves, and only fades in once frames are actually playing. It has no
+ * `poster`: the image underneath already is the poster, and a poster would
+ * only cost an extra download per card.
  *
  * `priority` marks the image as the page's likely LCP element: eager instead
  * of lazy, and fetched first.
  */
 export default function ProjectMedia({ media, name, sizes, priority = false }) {
-  const { cover, coverSize, video, poster } = media
+  const { cover, coverSize, video } = media
   const img = responsiveImage(cover, coverSize[0])
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
@@ -62,7 +64,6 @@ export default function ProjectMedia({ media, name, sizes, priority = false }) {
         <video
           ref={videoRef}
           className={`project__media-img project__media-video${playing ? ' is-playing' : ''}`}
-          poster={poster}
           muted
           loop
           playsInline

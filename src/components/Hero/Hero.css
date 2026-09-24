@@ -134,12 +134,32 @@
   .hero__title { font-size: clamp(2.2rem, 6.5vw, 4.6rem); }
 }
 
-/* Pre-hydration state of the entrance animation. The prerendered HTML is painted
-   before the JS runs, so hide the same elements GSAP animates in (Hero.jsx) to
-   avoid a flash of visible text. Gated on .js (set in index.html) so no-JS
-   visitors still see everything, and on motion preference to match the JS. */
+/* Entrance animation. Pure CSS so it runs from the first paint of the prerendered
+   HTML (no waiting for JS), and so the lead text — the page's LCP element — is
+   never held back by a script. `backwards` keeps each element in its "from" state
+   during its delay and hands the end state back to the normal rules (so the button's
+   hover lift still works). Under reduced motion nothing is hidden. */
 @media (prefers-reduced-motion: no-preference) {
-  .js .hero [data-hero-line] > span { transform: translateY(120%); }
-  .js .hero [data-hero-fade],
-  .js .hero .hero__scroll { opacity: 0; visibility: hidden; }
+  .hero__line > span {
+    animation: heroLine 1.05s cubic-bezier(0.165, 0.84, 0.44, 1) backwards;
+  }
+  .hero__line:nth-child(2) > span { animation-delay: 0.09s; }
+  .hero__line:nth-child(3) > span { animation-delay: 0.18s; }
+
+  .hero__eyebrow,
+  .hero__lead,
+  .hero__cta,
+  .hero__scroll {
+    animation: heroFade 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) backwards;
+  }
+  .hero__eyebrow { animation-delay: 0.1s; }
+  .hero__lead { animation-delay: 0.3s; }
+  .hero__cta { animation-delay: 0.42s; }
+  .hero__scroll { animation-delay: 0.7s; }
+}
+@keyframes heroLine {
+  from { transform: translateY(120%); }
+}
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(22px); }
 }

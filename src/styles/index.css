@@ -27,8 +27,8 @@
   --color-bg: #ffffff;          /* page background */
   --color-bg-alt: #f4f4f2;      /* subtle section contrast */
   --color-ink: #0a0a0a;         /* highlight / near-black */
-  --color-text: #6b6b6b;        /* normal body text (grey) */
-  --color-text-soft: #9a9a9a;   /* muted / captions */
+  --color-text: #595959;        /* normal body text (grey) */
+  --color-text-soft: #6e6e6e;   /* muted / captions (4.5:1 on white and on --color-bg-alt) */
   --color-line: #e4e4e1;        /* hairline borders */
   --color-line-strong: #cfcfca;
 

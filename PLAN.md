@@ -255,7 +255,7 @@ hydration warnings in the console, and GitHub Pages serves `/ca/` and `/en/` cor
 **Done when:** every public project has 3 prerendered language pages listed in the sitemap, and
 Rich Results Test passes on one of them.
 
-### [ ] S4. Performance pass
+### [x] S4. Performance pass
 
 - Run Lighthouse mobile against `npm run preview` for home + one case study, aiming for
   **≥ 95 Perf / 100 SEO / ≥ 95 A11y**, and fix whatever it flags.
@@ -434,3 +434,24 @@ _(Add anything surprising found during a task here.)_
 - **Still to do after deploy:** run the Rich Results Test / validator.schema.org on one case-study URL (I can only confirm JSON validity offline), check that
   GitHub Pages serves the nested `/en/work/<slug>/` folders, then tick S3. The og image is a .webp; if a scraper (e.g. LinkedIn) ignores it, add a 1200×630 JPG.
 - Not done: the "View project" link on Works points at pages that only exist after deploy (fine, they ship together).
+
+**S4 (2026-09-24) — built and verified locally; not yet deployed.**
+- Lighthouse mobile against `vite preview` (Node 22.0.0 shim as in S1), before → after:
+  - `/en/`: **Perf 90 → 99, A11y 90 → 100**, SEO 100, Best Practices 100. LCP 3.5 s → 2.1 s, TBT 30 ms, CLS 0. Transfer 457 KB → 226 KB (13 requests).
+  - `/en/work/predicasa/`: **Perf 96 → 99, A11y 91 → 100**, SEO 100. LCP 2.4 s → 2.1 s, TBT 100 → 10 ms, CLS 0. (1.7 MB transferred, all of it the 1.4 MB Predicasa
+    hero video that autoplays once in view; it is not on the critical path.) Two runs of `/en/` gave identical scores.
+- **LCP element was the hero lead paragraph, held back ~1 s** by the JS-driven entrance (hidden in CSS until GSAP ran after hydration). The entrance is now
+  pure CSS keyframes in `Hero.css` (same easing and stagger), so it starts at first paint; `Hero.jsx` no longer imports GSAP and the `.js` class script in
+  `index.html` was removed (nothing else used it). Uses `backwards` fill so the CTA's hover lift still works. Runs with JS off too.
+- **Chat is lazy:** `Chat.jsx` keeps only the launcher; the window and Worker call are in `ChatPanel.jsx`, imported on first hover/focus/click of the launcher
+  (own 1.5 kB gz chunk). The panel mounts after the first open and stays mounted, so history survives closing. Closed panel is now `inert` (fixes Lighthouse
+  `aria-hidden-focus`). Verified: chunk not requested at load, loads on hover, opens with focus in the input, Escape closes, a mocked reply renders.
+- **ScrollTrigger removed:** `useScrollReveal` now uses an IntersectionObserver + `gsap.to` (same 82 % trigger point, same fade/rise/stagger). GSAP core is still
+  used by the reveal hook and the Lightbox. Main JS 107 KB → 91 KB gzip. All 37 reveals on home and 11 on a case study reach opacity 1 after scrolling.
+- **Video posters dropped** from cards and case-study heroes: the `<picture>` under the video is already the poster (the video is `opacity: 0` until playing), and
+  each poster was an extra 30–70 KB download at page load. The `poster.webp` files stay in `public/projects/` (the capture script still produces them) but are unused.
+- **Prefetch:** `src/prefetch.js` adds `<link rel="prefetch">` (once per URL) on hover/focus of the "View project" links and the "next project" link.
+- **Visible change to check:** to pass colour contrast, `--color-text-soft` went `#9a9a9a → #6e6e6e` and `--color-text` `#6b6b6b → #595959` (kept apart so the
+  hierarchy survives). Muted text is a touch darker everywhere. The dark contact block and chat header keep their own light greys (they were already fine).
+- Left as is: Lighthouse still lists unused JS (~40 KB, hydration code), render-blocking CSS (6 KB gz) and image-delivery hints, all informational at these scores.
+  Not measured: a real device, or the live site after deploy. Re-run Lighthouse on `https://balearstudio.com/en/` once this ships.

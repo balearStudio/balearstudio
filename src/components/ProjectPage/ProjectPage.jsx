@@ -4,6 +4,7 @@ import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { responsiveImage } from '../../data/asset'
 import { publicProjects } from '../../data/projects'
 import { homePath, projectPath } from '../../routes'
+import { prefetch } from '../../prefetch'
 import Lightbox from '../Lightbox/Lightbox'
 import ProjectMedia from '../ProjectMedia/ProjectMedia'
 import VisitArrow from '../VisitArrow/VisitArrow'
@@ -151,7 +152,12 @@ export default function ProjectPage({ slug }) {
         )}
 
         {next && next.slug !== project.slug && (
-          <a href={projectPath(lang, next.slug)} className="case__next reveal">
+          <a
+            href={projectPath(lang, next.slug)}
+            className="case__next reveal"
+            onPointerEnter={() => prefetch(projectPath(lang, next.slug))}
+            onFocus={() => prefetch(projectPath(lang, next.slug))}
+          >
             <span className="eyebrow">{t('work.case.next')}</span>
             <span className="case__next-name">
               {next.copy[lang].name}

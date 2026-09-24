@@ -3,6 +3,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { projects } from '../../data/projects'
 import { projectPath } from '../../routes'
+import { prefetch } from '../../prefetch'
 import Lightbox from '../Lightbox/Lightbox'
 import ProjectMedia from '../ProjectMedia/ProjectMedia'
 import VisitArrow from '../VisitArrow/VisitArrow'
@@ -84,7 +85,12 @@ function ProjectCard({ project, variant, index, sizes, onOpen }) {
             <span className="project__category">{category}</span>
             <ProjectStatus project={project} t={t} />
             {project.status !== 'private' && (
-              <a href={projectPath(lang, project.slug)} className="project__view">
+              <a
+                href={projectPath(lang, project.slug)}
+                className="project__view"
+                onPointerEnter={() => prefetch(projectPath(lang, project.slug))}
+                onFocus={() => prefetch(projectPath(lang, project.slug))}
+              >
                 {t('work.viewProject')}
                 <VisitArrow />
               </a>
