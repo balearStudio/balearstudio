@@ -13,57 +13,82 @@
   font-size: 1.05rem;
 }
 
-.works__list {
+/* Featured: the first card leads at full width, the rest sit two-up. */
+.works__featured {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
   border-top: 1px solid var(--color-line);
 }
-
-.works__item {
-  border-bottom: 1px solid var(--color-line);
+.works__featured > :first-child {
+  grid-column: 1 / -1;
 }
 
-/* Project row ---------------------------------------------- */
-.project {
-  display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(200px, 22rem);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: center;
-  padding-block: clamp(2rem, 4vw, 3rem);
-  position: relative;
-}
-/* Subtle wash that appears across the whole row on hover */
-.project::before {
-  content: '';
-  position: absolute;
-  inset: 0 calc(-1 * var(--gutter));
-  background: var(--color-bg-alt);
-  opacity: 0;
-  transition: opacity 0.45s var(--ease-out);
-  z-index: -1;
-  pointer-events: none;
-}
-.project:hover::before {
-  opacity: 1;
-}
-
-.project__index {
-  font-size: 0.85rem;
+/* Compact grid for everything else */
+.works__more {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-line);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--color-text-soft);
-  align-self: flex-start;
-  padding-top: 0.5rem;
-  font-variant-numeric: tabular-nums;
+}
+.works__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: clamp(2rem, 3vw, 2.5rem) clamp(1.25rem, 2vw, 1.75rem);
+  margin-top: 1.75rem;
 }
 
+/* Project card ---------------------------------------------- */
+.works__item {
+  min-width: 0;
+}
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+}
+.project--lead {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: end;
+  height: auto;
+}
+
+.project__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .project__heading {
   display: flex;
   align-items: baseline;
-  gap: 1rem;
+  gap: 0.4rem 1rem;
   flex-wrap: wrap;
 }
+.project__index {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
 .project__name {
-  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
   font-weight: 500;
   color: var(--color-ink);
+}
+.project--lead .project__name {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+}
+.project--compact .project__name {
+  font-size: 1.2rem;
 }
 .project__name a {
   transition: transform 0.4s var(--ease-out);
@@ -77,18 +102,23 @@
   color: var(--color-text-soft);
 }
 .project__desc {
-  margin-top: 0.9rem;
+  margin-top: 0.8rem;
   max-width: 52ch;
   color: var(--color-text);
   font-size: 1rem;
+}
+.project--compact .project__desc {
+  font-size: 0.92rem;
+  margin-top: 0.5rem;
 }
 
 .project__meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.6rem 1.5rem;
-  margin-top: 1.25rem;
+  gap: 0.6rem 1.25rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
 }
 .project__category {
   font-size: 0.78rem;
@@ -181,7 +211,9 @@
 
 /* Media thumbnail -------------------------------------------
    Screenshots default to greyscale to hold the monochrome
-   palette; hovering reveals true colour as a small payoff. */
+   palette; hovering reveals true colour as a small payoff.
+   The box has a fixed aspect ratio, so nothing shifts while
+   images or videos load. */
 .project__media {
   display: block;
   width: 100%;
@@ -190,7 +222,7 @@
 .project__media-box {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 6px;
   background: var(--color-bg-alt);
@@ -205,19 +237,30 @@
   object-position: top center;
   filter: grayscale(1) contrast(1.02);
   transform: scale(1.02);
-  transition: filter 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition: filter 0.6s var(--ease-out), transform 0.6s var(--ease-out),
+    opacity 0.5s var(--ease-out);
+}
+/* The video sits over the image and only appears once it is really playing. */
+.project__media-video {
+  opacity: 0;
+}
+.project__media-video.is-playing {
+  opacity: 1;
 }
 .project:hover .project__media-img {
   filter: grayscale(0);
   transform: scale(1.06);
 }
 
-@media (max-width: 760px) {
-  .project {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
+@media (max-width: 900px) {
+  .project--lead {
+    display: flex;
+    gap: 1.25rem;
   }
-  .project__index { padding-top: 0; }
-  .project__media-box { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 760px) {
+  .works__featured {
+    grid-template-columns: 1fr;
+  }
   .project__name a:hover { transform: none; }
 }

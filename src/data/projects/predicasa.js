@@ -11,6 +11,7 @@ export default {
   services: ['design', 'webapp', 'ai'],
   stack: ['React', 'Vite', 'Supabase', 'Leaflet'],
   media: {
+    coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/predicasa/cover.webp'),
     video: asset('/projects/predicasa/video.mp4'),
     poster: asset('/projects/predicasa/poster.webp'),

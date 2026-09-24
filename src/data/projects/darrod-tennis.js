@@ -11,6 +11,7 @@ export default {
   services: ['design', 'development', 'booking', 'multilingual'],
   stack: ['Next.js', 'React'],
   media: {
+    coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/darrod-tennis/cover.webp'),
     video: asset('/projects/darrod-tennis/video.mp4'),
     poster: asset('/projects/darrod-tennis/poster.webp'),

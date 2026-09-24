@@ -11,6 +11,7 @@ export default {
   services: ['design', 'development'],
   stack: ['React', 'Vite', 'GSAP'],
   media: {
+    coverSize: [1050, 1280], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/finai/cover.webp'),
     video: null,
     poster: null,

@@ -11,6 +11,7 @@ export default {
   services: ['design', 'development', 'booking', 'multilingual'],
   stack: ['HTML', 'CSS', 'JavaScript', 'Doctoralia'],
   media: {
+    coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/melani/cover.webp'),
     video: asset('/projects/melani/video.mp4'),
     poster: asset('/projects/melani/poster.webp'),

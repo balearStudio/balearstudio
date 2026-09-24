@@ -11,6 +11,7 @@ export default {
   services: ['design', 'development', 'multilingual'],
   stack: ['HTML', 'CSS', 'JavaScript'],
   media: {
+    coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/a2-dental/cover.webp'),
     video: asset('/projects/a2-dental/video.mp4'),
     poster: asset('/projects/a2-dental/poster.webp'),

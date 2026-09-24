@@ -41,6 +41,7 @@ export const translations = {
       galleryPrev: 'Anterior',
       galleryNext: 'Siguiente',
       comingSoon: 'Próximamente',
+      moreTitle: 'Más proyectos',
       services: {
         design: 'Diseño web',
         development: 'Desarrollo web',
@@ -132,6 +133,7 @@ export const translations = {
       galleryPrev: 'Anterior',
       galleryNext: 'Següent',
       comingSoon: 'Aviat',
+      moreTitle: 'Més projectes',
       services: {
         design: 'Disseny web',
         development: 'Desenvolupament web',
@@ -223,6 +225,7 @@ export const translations = {
       galleryPrev: 'Previous',
       galleryNext: 'Next',
       comingSoon: 'Coming soon',
+      moreTitle: 'More projects',
       services: {
         design: 'Web design',
         development: 'Web development',

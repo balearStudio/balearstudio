@@ -396,3 +396,21 @@ _(Add anything surprising found during a task here.)_
   projects show a "Próximamente / Aviat / Coming soon" pill (`.project__soon`) instead of a link (D1). P4 should replace this with its own badge design.
   Checked with `vite preview` in ES, CA and EN (390 px for EN): 7 cards, 4 badges, no console errors, no overflow.
 - Kept the wedding site's existing copy (already final, trilingual, and anonymous per D2).
+
+**P4 (2026-09-24) — built and verified locally; waiting for the owner's sign-off on the look (the box stays unticked until then).**
+- Works is now 3 featured cards (Predicasa full-width lead, Darrod + A2 Dental two-up; driven by `featured` + `order`, so D4 holds) and a
+  compact grid of the other 4 under a "More projects" heading (`work.moreTitle`). Cards are media-first and keep the greyscale → colour hover.
+  Status: `live` → "Visit site" link (name is linked too), `preview` → "Coming soon" pill and no link, `private` → lock + tooltip.
+- Images are `<picture>` with AVIF → WebP and `srcset` (800w / full width) + `sizes`, and explicit `width`/`height` from the new `media.coverSize`
+  in each project file. `responsiveImage()` in `src/data/asset.js` derives the AVIF/`-800` names from the `.webp` cover path.
+  All images `loading="lazy"` (the section is below the fold).
+- Videos: `preload="none"`, `poster`, WebM then MP4 sources, laid over the `<picture>` and faded in on `playing`. An IntersectionObserver plays
+  them at ≥50% visible and pauses them when they leave. Reduced motion renders no `<video>` at all. `muted` is set in JS because hydration doesn't.
+- **Not done, on purpose:** the optional sector filter (the data is 6 web, 1 AI app, 0 e-commerce, so it wouldn't read well), and the
+  "View project" link (there is no route until S3). The Lightbox is untouched.
+- Verified with `vite preview` (Playwright): 7 cards (3 featured, 4 badges, 2 visit links, 1 lock) in ES/CA/EN at 1440, 820 and 390 px, no console
+  errors or failed requests, no horizontal overflow, CLS 0, videos only play while in view, lightbox opens/navigates/closes.
+- Lighthouse mobile, `/en/`: **Perf 90 / A11y 90 / SEO 100, CLS 0, LCP 3.5 s, TBT 60 ms.** Baseline (P3 build, same machine and shim): Perf 92 /
+  A11y 90 / SEO 100, CLS 0, LCP 3.2 s, TBT 100 ms. So no CLS regression; the ±2 Perf difference is within run-to-run noise. Perf and A11y are still
+  short of S4's targets (≥95 / ≥95).
+- Not checked: a real tablet or phone (only Playwright viewports), and the touch behaviour of the hover colour reveal (it stays greyscale on touch, as before).

@@ -11,6 +11,7 @@ export default {
   services: ['design', 'development'],
   stack: ['Astro'],
   media: {
+    coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
     cover: asset('/projects/rmelendi/cover.webp'),
     video: asset('/projects/rmelendi/video.mp4'),
     poster: asset('/projects/rmelendi/poster.webp'),
