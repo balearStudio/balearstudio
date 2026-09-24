@@ -1,11 +1,13 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import { savePreference } from '../../i18n/preference'
+import { pagePath } from '../../routes'
 import './LanguageSwitcher.css'
 
 // Each language lives at its own URL, so these are plain links (crawlable, and
-// they work without JS). The current language is shown, not linked.
+// they work without JS). The current language is shown, not linked; on a case
+// study the links lead to the same project in the other language.
 export default function LanguageSwitcher() {
-  const { lang, languages, t } = useLanguage()
+  const { lang, slug, languages, t } = useLanguage()
 
   return (
     <div className="lang-switch" role="group" aria-label={t('a11y.language')}>
@@ -19,7 +21,7 @@ export default function LanguageSwitcher() {
           ) : (
             <a
               className="lang-switch__btn"
-              href={l.path}
+              href={pagePath(l.code, slug)}
               hrefLang={l.code}
               lang={l.code}
               title={l.name}

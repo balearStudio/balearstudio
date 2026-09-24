@@ -1,15 +1,21 @@
 /* ============================================================
-   Per-language <head> for the prerendered pages. Pure JS (no React,
-   no browser APIs) so scripts/prerender.mjs can call it at build time.
+   Per-page <head> for the prerendered pages (home and case studies, in
+   each language). Pure JS (no React, no browser APIs) so
+   scripts/prerender.mjs can call it at build time.
    Generic head tags (icons, manifest, font preload) stay in index.html.
    ============================================================ */
-import { LANGUAGES, DEFAULT_LANG } from './i18n/translations.js'
+import { LANGUAGES, DEFAULT_LANG, translations } from './i18n/translations.js'
+import { publicProjects } from './data/projects/index.js'
+import { PAGES, pagePath } from './routes.js'
 
 export const SITE_ORIGIN = 'https://balearstudio.com'
 export const OG_IMAGE = `${SITE_ORIGIN}/og.png`
 
 export const langUrl = (code) =>
   SITE_ORIGIN + LANGUAGES.find((l) => l.code === code).path
+
+/** Absolute URL of a page: the home page when `slug` is null, else a case study. */
+export const pageUrl = (code, slug = null) => SITE_ORIGIN + pagePath(code, slug)
 
 // Titles and descriptions are written around what local clients search for.
 export const meta = {
@@ -36,19 +42,30 @@ export const meta = {
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
+const organizationNode = {
+  '@type': 'Organization',
+  '@id': `${SITE_ORIGIN}/#organization`,
+  name: 'balearSTUDIO',
+  url: `${SITE_ORIGIN}/`,
+  logo: `${SITE_ORIGIN}/icon-512.png`,
+  email: 'info@balearstudio.com',
+}
+
+const websiteNode = {
+  '@type': 'WebSite',
+  '@id': `${SITE_ORIGIN}/#website`,
+  name: 'balearSTUDIO',
+  url: `${SITE_ORIGIN}/`,
+  inLanguage: LANGUAGES.map((l) => l.code),
+  publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+}
+
 function jsonLd(lang) {
   const { description } = meta[lang]
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': `${SITE_ORIGIN}/#organization`,
-        name: 'balearSTUDIO',
-        url: `${SITE_ORIGIN}/`,
-        logo: `${SITE_ORIGIN}/icon-512.png`,
-        email: 'info@balearstudio.com',
-      },
+      organizationNode,
       {
         '@type': 'ProfessionalService',
         '@id': `${SITE_ORIGIN}/#business`,
@@ -71,14 +88,7 @@ function jsonLd(lang) {
         knowsLanguage: LANGUAGES.map((l) => l.code),
         parentOrganization: { '@id': `${SITE_ORIGIN}/#organization` },
       },
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_ORIGIN}/#website`,
-        name: 'balearSTUDIO',
-        url: `${SITE_ORIGIN}/`,
-        inLanguage: LANGUAGES.map((l) => l.code),
-        publisher: { '@id': `${SITE_ORIGIN}/#organization` },
-      },
+      websiteNode,
       {
         '@type': 'WebPage',
         '@id': `${langUrl(lang)}#webpage`,
@@ -93,11 +103,87 @@ function jsonLd(lang) {
   }
 }
 
-/** Head markup that differs per language: title, description, canonical,
- *  hreflang, Open Graph / Twitter and JSON-LD. */
-export function buildHead(lang) {
-  const { title, description, imageAlt } = meta[lang]
-  const url = langUrl(lang)
+/** Case-study copy for the <head>: the title and description are the project's
+ *  own words, so each page targets its sector ("web para academia de tenis"). */
+function projectMeta(lang, project) {
+  const { name, category, description } = project.copy[lang]
+  const [width, height] = project.media.coverSize
+  return {
+    title: `${name} — ${category} | balearSTUDIO`,
+    description,
+    imageAlt: name,
+    image: { url: SITE_ORIGIN + project.media.cover, width, height },
+  }
+}
+
+function projectJsonLd(lang, project) {
+  const { name, category, description } = project.copy[lang]
+  const url = pageUrl(lang, project.slug)
+  const home = langUrl(lang)
+  const serviceLabels = project.services.map((s) => translations[lang].work.services[s])
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      organizationNode,
+      websiteNode,
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: projectMeta(lang, project).title,
+        description,
+        inLanguage: lang,
+        isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+        primaryImageOfPage: { '@id': `${url}#image` },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+        mainEntity: { '@id': `${url}#project` },
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': `${url}#image`,
+        url: SITE_ORIGIN + project.media.cover,
+        width: project.media.coverSize[0],
+        height: project.media.coverSize[1],
+        caption: name,
+      },
+      {
+        '@type': 'CreativeWork',
+        '@id': `${url}#project`,
+        name,
+        headline: name,
+        description,
+        url,
+        inLanguage: lang,
+        image: { '@id': `${url}#image` },
+        genre: category,
+        keywords: [...serviceLabels, ...project.stack].join(', '),
+        dateCreated: project.year,
+        creator: { '@id': `${SITE_ORIGIN}/#organization` },
+        // The client's own site, once it is public.
+        ...(project.status === 'live' && { sameAs: [project.url] }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'balearSTUDIO', item: home },
+          { '@type': 'ListItem', position: 2, name: translations[lang].nav.work, item: `${home}#work` },
+          { '@type': 'ListItem', position: 3, name, item: url },
+        ],
+      },
+    ],
+  }
+}
+
+/** Head markup that differs per page: title, description, canonical, hreflang,
+ *  Open Graph / Twitter and JSON-LD. `slug` is null for the home page. */
+export function buildHead(lang, slug = null) {
+  const project = slug ? publicProjects.find((p) => p.slug === slug) : null
+  const { title, description, imageAlt, image } = project
+    ? projectMeta(lang, project)
+    : { ...meta[lang], image: { url: OG_IMAGE, width: 1200, height: 630 } }
+  const graph = project ? projectJsonLd(lang, project) : jsonLd(lang)
+  const url = pageUrl(lang, slug)
   const current = LANGUAGES.find((l) => l.code === lang)
 
   const lines = [
@@ -105,9 +191,9 @@ export function buildHead(lang) {
     `<meta name="description" content="${esc(description)}" />`,
     `<link rel="canonical" href="${url}" />`,
     ...LANGUAGES.map(
-      (l) => `<link rel="alternate" hreflang="${l.code}" href="${langUrl(l.code)}" />`,
+      (l) => `<link rel="alternate" hreflang="${l.code}" href="${pageUrl(l.code, slug)}" />`,
     ),
-    `<link rel="alternate" hreflang="x-default" href="${langUrl(DEFAULT_LANG)}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${pageUrl(DEFAULT_LANG, slug)}" />`,
     // Open Graph / Twitter. Scrapers fetch these server-side, so og:image and
     // og:url must be absolute URLs.
     `<meta property="og:title" content="${esc(title)}" />`,
@@ -119,26 +205,28 @@ export function buildHead(lang) {
     ...LANGUAGES.filter((l) => l.code !== lang).map(
       (l) => `<meta property="og:locale:alternate" content="${l.locale}" />`,
     ),
-    `<meta property="og:image" content="${OG_IMAGE}" />`,
-    `<meta property="og:image:width" content="1200" />`,
-    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image" content="${image.url}" />`,
+    `<meta property="og:image:width" content="${image.width}" />`,
+    `<meta property="og:image:height" content="${image.height}" />`,
     `<meta property="og:image:alt" content="${esc(imageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
-    `<script type="application/ld+json">${JSON.stringify(jsonLd(lang)).replace(/</g, '\\u003c')}</script>`,
+    `<script type="application/ld+json">${JSON.stringify(graph).replace(/</g, '\\u003c')}</script>`,
   ]
   return lines.join('\n    ')
 }
 
+/** One <url> per page (home and case studies, in every language), each listing
+ *  all of its language alternates. */
 export function buildSitemap() {
-  const alternates = [
-    ...LANGUAGES.map(
-      (l) => `\n    <xhtml:link rel="alternate" hreflang="${l.code}" href="${langUrl(l.code)}" />`,
-    ),
-    `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${langUrl(DEFAULT_LANG)}" />`,
-  ].join('')
-  const entries = LANGUAGES.map(
-    (l) => `  <url>\n    <loc>${langUrl(l.code)}</loc>${alternates}\n  </url>`,
-  ).join('\n')
+  const entries = PAGES.map(({ lang, slug }) => {
+    const alternates = [
+      ...LANGUAGES.map(
+        (l) => `\n    <xhtml:link rel="alternate" hreflang="${l.code}" href="${pageUrl(l.code, slug)}" />`,
+      ),
+      `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(DEFAULT_LANG, slug)}" />`,
+    ].join('')
+    return `  <url>\n    <loc>${pageUrl(lang, slug)}</loc>${alternates}\n  </url>`
+  }).join('\n')
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">

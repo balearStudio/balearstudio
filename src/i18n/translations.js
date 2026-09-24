@@ -4,11 +4,12 @@
    ============================================================ */
 
 // `path` is the URL each language is served from (Spanish stays at the root so
-// the already-indexed URL doesn't change); `locale` feeds og:locale.
+// the already-indexed URL doesn't change); `projectsPath` is the folder its case
+// studies live in (src/routes.js); `locale` feeds og:locale.
 export const LANGUAGES = [
-  { code: 'es', label: 'ES', name: 'Español', path: '/', locale: 'es_ES' },
-  { code: 'ca', label: 'CA', name: 'Català', path: '/ca/', locale: 'ca_ES' },
-  { code: 'en', label: 'EN', name: 'English', path: '/en/', locale: 'en_GB' },
+  { code: 'es', label: 'ES', name: 'Español', path: '/', projectsPath: '/proyectos/', locale: 'es_ES' },
+  { code: 'ca', label: 'CA', name: 'Català', path: '/ca/', projectsPath: '/ca/projectes/', locale: 'ca_ES' },
+  { code: 'en', label: 'EN', name: 'English', path: '/en/', projectsPath: '/en/work/', locale: 'en_GB' },
 ]
 
 export const DEFAULT_LANG = 'es'
@@ -42,6 +43,20 @@ export const translations = {
       galleryNext: 'Siguiente',
       comingSoon: 'Próximamente',
       moreTitle: 'Más proyectos',
+      viewProject: 'Ver proyecto',
+      case: {
+        breadcrumb: 'Ruta de navegación',
+        sector: 'Sector',
+        servicesLabel: 'Servicios',
+        stackLabel: 'Tecnología',
+        year: 'Año',
+        challenge: 'El reto',
+        solution: 'La solución',
+        result: 'El resultado',
+        screens: 'Capturas',
+        next: 'Siguiente proyecto',
+        sectors: { web: 'Sitio web', ecommerce: 'Tienda online', 'ai-app': 'Aplicación con IA' },
+      },
       services: {
         design: 'Diseño web',
         development: 'Desarrollo web',
@@ -134,6 +149,20 @@ export const translations = {
       galleryNext: 'Següent',
       comingSoon: 'Aviat',
       moreTitle: 'Més projectes',
+      viewProject: 'Veure projecte',
+      case: {
+        breadcrumb: 'Ruta de navegació',
+        sector: 'Sector',
+        servicesLabel: 'Serveis',
+        stackLabel: 'Tecnologia',
+        year: 'Any',
+        challenge: 'El repte',
+        solution: 'La solució',
+        result: 'El resultat',
+        screens: 'Captures',
+        next: 'Projecte següent',
+        sectors: { web: 'Lloc web', ecommerce: 'Botiga en línia', 'ai-app': 'Aplicació amb IA' },
+      },
       services: {
         design: 'Disseny web',
         development: 'Desenvolupament web',
@@ -226,6 +255,20 @@ export const translations = {
       galleryNext: 'Next',
       comingSoon: 'Coming soon',
       moreTitle: 'More projects',
+      viewProject: 'View project',
+      case: {
+        breadcrumb: 'Breadcrumb',
+        sector: 'Sector',
+        servicesLabel: 'Services',
+        stackLabel: 'Stack',
+        year: 'Year',
+        challenge: 'The challenge',
+        solution: 'The solution',
+        result: 'The result',
+        screens: 'Screens',
+        next: 'Next project',
+        sectors: { web: 'Website', ecommerce: 'Online store', 'ai-app': 'AI application' },
+      },
       services: {
         design: 'Web design',
         development: 'Web development',

@@ -1,4 +1,5 @@
 import { useLanguage } from '../../i18n/LanguageContext'
+import { homePath } from '../../routes'
 import './Logo.css'
 
 /**
@@ -6,10 +7,10 @@ import './Logo.css'
  * "balear" lowercase + "STUDIO" uppercase bold, wide letter-spacing.
  */
 export default function Logo({ onClick, className = '' }) {
-  const { t } = useLanguage()
+  const { t, lang, slug } = useLanguage()
   return (
     <a
-      href="#top"
+      href={slug ? homePath(lang) : '#top'}
       onClick={onClick}
       className={`logo ${className}`}
       aria-label={t('a11y.home')}

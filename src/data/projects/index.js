@@ -24,3 +24,7 @@ export const projects = [
   melani,
   finai,
 ].sort((a, b) => a.order - b.order)
+
+// Projects that get a case-study page of their own. Private ones (client
+// request) are never linked, prerendered or listed in the sitemap.
+export const publicProjects = projects.filter((p) => p.status !== 'private')

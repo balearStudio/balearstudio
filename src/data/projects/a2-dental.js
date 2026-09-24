@@ -12,6 +12,7 @@ export default {
   stack: ['HTML', 'CSS', 'JavaScript'],
   media: {
     coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
+    gallerySizes: [[1600, 1000], [1600, 1000], [1600, 1000], [1170, 2532]], // [width, height] of each `gallery` entry
     cover: asset('/projects/a2-dental/cover.webp'),
     video: asset('/projects/a2-dental/video.mp4'),
     poster: asset('/projects/a2-dental/poster.webp'),

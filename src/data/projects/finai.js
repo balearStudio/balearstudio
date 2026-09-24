@@ -12,6 +12,7 @@ export default {
   stack: ['React', 'Vite', 'GSAP'],
   media: {
     coverSize: [1050, 1280], // [width, height] of the full-size cover, for the <img> box
+    gallerySizes: [[1050, 1280], [1600, 983]], // [width, height] of each `gallery` entry
     cover: asset('/projects/finai/cover.webp'),
     video: null,
     poster: null,

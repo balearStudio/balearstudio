@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import Logo from '../Logo/Logo'
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { homePath } from '../../routes'
 import './Header.css'
 
 export default function Header() {
-  const { t } = useLanguage()
+  const { t, lang, slug } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -22,10 +23,12 @@ export default function Header() {
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
+  // On a case study the sections live on the home page.
+  const base = slug ? homePath(lang) : ''
   const links = [
-    { href: '#work', label: t('nav.work') },
-    { href: '#studio', label: t('nav.studio') },
-    { href: '#contact', label: t('nav.contact') },
+    { href: `${base}#work`, label: t('nav.work') },
+    { href: `${base}#studio`, label: t('nav.studio') },
+    { href: `${base}#contact`, label: t('nav.contact') },
   ]
 
   const closeMenu = () => setMenuOpen(false)

@@ -2,17 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { LanguageProvider } from './i18n/LanguageContext.jsx'
-import { langFromPath, redirectToStoredLanguage } from './i18n/preference.js'
+import { redirectToStoredLanguage } from './i18n/preference.js'
+import { pageFromPath } from './routes.js'
 import './styles/index.css'
 
 redirectToStoredLanguage()
 
-const lang = langFromPath(window.location.pathname)
+const { lang, slug } = pageFromPath(window.location.pathname)
 document.documentElement.lang = lang
 
 const app = (
   <React.StrictMode>
-    <LanguageProvider lang={lang}>
+    <LanguageProvider lang={lang} slug={slug}>
       <App />
     </LanguageProvider>
   </React.StrictMode>

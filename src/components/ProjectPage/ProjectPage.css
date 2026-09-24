@@ -1,0 +1,235 @@
+.case {
+  padding-top: 78px; /* clears the fixed header */
+}
+.case > .container {
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+/* Breadcrumb --------------------------------------------------- */
+.case__crumbs {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: 0.85rem;
+}
+.case__crumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+}
+.case__crumbs li + li::before {
+  content: '/';
+  margin-right: 0.6rem;
+  color: var(--color-line-strong);
+}
+.case__crumbs a {
+  color: var(--color-text);
+  transition: color 0.25s var(--ease-out);
+}
+.case__crumbs a:hover {
+  color: var(--color-ink);
+}
+.case__crumbs [aria-current] {
+  color: var(--color-ink);
+}
+
+/* Head ----------------------------------------------------------- */
+.case__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(2rem, 4vw, 3rem);
+}
+.case__title {
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  letter-spacing: -0.03em;
+}
+.case__lead {
+  max-width: 46ch;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: var(--color-text);
+}
+.case__status:empty {
+  display: none;
+}
+.case__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: 2px;
+}
+.case__visit svg {
+  transition: transform 0.35s var(--ease-out);
+}
+.case__visit:hover svg {
+  transform: translate(3px, -3px);
+}
+.case__soon {
+  display: inline-flex;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-soft);
+}
+
+/* Hero media (reuses the card's greyscale → colour box) ----------- */
+.case__media {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.case__media:hover .project__media-img {
+  filter: grayscale(0);
+  transform: scale(1.03);
+}
+
+/* Intro: description + facts -------------------------------------- */
+.case__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--color-line);
+}
+.case__desc {
+  max-width: 52ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  color: var(--color-text);
+}
+.case__facts {
+  display: grid;
+}
+.case__fact {
+  display: grid;
+  grid-template-columns: minmax(6rem, 9rem) minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.case__fact:first-child {
+  padding-top: 0;
+}
+.case__fact dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  padding-top: 0.2rem;
+}
+.case__fact dd {
+  color: var(--color-ink);
+}
+
+/* Challenge → solution → result ------------------------------------ */
+.case__story {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-line);
+}
+.case__step {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--color-line);
+}
+.case__step-title {
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+}
+.case__step p {
+  max-width: 62ch;
+  color: var(--color-text);
+}
+
+/* Screens ------------------------------------------------------------
+   One row of screenshots sharing a height: each item grows in proportion
+   to its aspect ratio (set inline), so a phone shot sits beside the
+   desktop ones without cropping. */
+.case__screens {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+.case__shots {
+  list-style: none;
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-top: 1.5rem;
+}
+.case__shot {
+  flex-basis: 0;
+  flex-shrink: 1;
+  min-width: 0;
+}
+.case__shot button {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg-alt);
+}
+.case__shot img {
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(1.02);
+  transition: filter 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.case__shot button:hover img {
+  filter: grayscale(0);
+  transform: scale(1.03);
+}
+
+/* Next project ---------------------------------------------------- */
+.case__next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--color-line);
+}
+.case__next-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+.case__next-name svg {
+  flex: none;
+  transition: transform 0.4s var(--ease-out);
+}
+.case__next:hover .case__next-name svg {
+  transform: translateX(8px);
+}
+.case__next-cat {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+
+@media (max-width: 800px) {
+  .case__intro,
+  .case__step {
+    grid-template-columns: 1fr;
+  }
+  .case__shots {
+    flex-direction: column;
+  }
+  .case__shot {
+    flex: none !important;
+    width: 100%;
+  }
+  /* A phone screenshot at full width would be over two screens tall. */
+  .case__shot--tall {
+    width: min(100%, 260px);
+  }
+}

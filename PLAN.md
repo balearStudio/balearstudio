@@ -414,3 +414,23 @@ _(Add anything surprising found during a task here.)_
   A11y 90 / SEO 100, CLS 0, LCP 3.2 s, TBT 100 ms. So no CLS regression; the ±2 Perf difference is within run-to-run noise. Perf and A11y are still
   short of S4's targets (≥95 / ≥95).
 - Not checked: a real tablet or phone (only Playwright viewports), and the touch behaviour of the hover colour reveal (it stays greyscale on touch, as before).
+
+**S3 (2026-09-24) — built and verified locally; pushed, awaiting live check.**
+- URLs: `/proyectos/<slug>/`, `/ca/projectes/<slug>/`, `/en/work/<slug>/` for the 6 non-private projects (18 pages, 21 with the homes, all in `sitemap.xml`
+  with hreflang + x-default). `finai` (private) has no page. Routes live in `src/routes.js` (`PAGES`, `pagePath`, `pageFromPath`); `LANGUAGES` gained `projectsPath`.
+  Still no router: `App` renders `ProjectPage` when the language context has a `slug`, and `prerender.mjs` loops over `PAGES`.
+- `src/components/ProjectPage/`: breadcrumb, H1, summary, status (visit link / "Coming soon"), hero media (autoplay video like the cards), description + facts
+  (sector, year, services, stack), challenge → solution → result (only when written: the 3 featured projects), screens strip, next project, then the
+  existing Contact block as the CTA. The Lightbox opens from the hero or any screen.
+- The LanguageSwitcher keeps you on the same project; Header/Logo links go to `<home>#work` etc. on case-study pages. Works cards got a "View project" link.
+- `ProjectMedia` was extracted from Works (own CSS) so the cards and the page share it; `VisitArrow` too. `media.gallerySizes` (width/height per gallery entry) was
+  added to every project file so screenshots have explicit dimensions; update it if the capture script's output sizes change.
+- Head per page (`src/seo.js`): title `"<name> — <category> | balearSTUDIO"`, description = the project's description (160–240 chars, so Google may truncate the tail),
+  canonical, hreflang, OG image = the project cover (absolute .webp URL), and JSON-LD `WebPage` + `CreativeWork` (creator = the Organization) + `ImageObject` +
+  `BreadcrumbList`. `sameAs` = the client's URL only for `live` projects.
+- Verified locally (Playwright vs `vite preview`, production build): 5 pages in 3 languages have correct `lang`, switcher and nav links; no console errors or
+  hydration warnings, no failed requests, no horizontal overflow at 1440 / 820 / 390; lightbox opens from hero and screens; no-JS HTML contains the H1 and story;
+  all 21 JSON-LD blocks parse as JSON.
+- **Still to do after deploy:** run the Rich Results Test / validator.schema.org on one case-study URL (I can only confirm JSON validity offline), check that
+  GitHub Pages serves the nested `/en/work/<slug>/` folders, then tick S3. The og image is a .webp; if a scraper (e.g. LinkedIn) ignores it, add a 1200×630 JPG.
+- Not done: the "View project" link on Works points at pages that only exist after deploy (fine, they ship together).

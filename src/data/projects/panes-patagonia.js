@@ -12,6 +12,7 @@ export default {
   stack: ['React', 'Vite'],
   media: {
     coverSize: [1600, 1000], // [width, height] of the full-size cover, for the <img> box
+    gallerySizes: [[1600, 1000], [1600, 1000], [1600, 1000], [1170, 2532]], // [width, height] of each `gallery` entry
     cover: asset('/projects/panes-patagonia/cover.webp'),
     video: asset('/projects/panes-patagonia/video.mp4'),
     poster: asset('/projects/panes-patagonia/poster.webp'),
