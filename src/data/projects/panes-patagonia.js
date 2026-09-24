@@ -1,7 +1,5 @@
 import { asset } from '../asset'
 
-/* Placeholder — media is in place (P2); copy is still TODO until P3.
-   Works.jsx skips projects with TODO copy until then. */
 export default {
   slug: 'panes-patagonia',
   order: 5,
@@ -10,8 +8,8 @@ export default {
   status: 'preview', // set to 'live' and fill `url` when the site launches
   url: null,
   sector: 'web',
-  services: [], // TODO (P3)
-  stack: [], // TODO (P3)
+  services: ['design', 'development'],
+  stack: ['React', 'Vite'],
   media: {
     cover: asset('/projects/panes-patagonia/cover.webp'),
     video: asset('/projects/panes-patagonia/video.mp4'),
@@ -24,8 +22,35 @@ export default {
     ],
   },
   copy: {
-    es: { name: 'Panes Patagonia', category: 'TODO', summary: 'TODO', description: 'TODO' },
-    ca: { name: 'Panes Patagonia', category: 'TODO', summary: 'TODO', description: 'TODO' },
-    en: { name: 'Panes Patagonia', category: 'TODO', summary: 'TODO', description: 'TODO' },
+    es: {
+      name:
+        'Panes Patagonia',
+      category:
+        'Web para obrador de pan',
+      summary:
+        'Web de producto para un obrador artesanal que sirve a la hostelería.',
+      description:
+        'Web para un obrador artesanal de pan de hamburguesa que trabaja solo con hostelería en toda España: catálogo de panes con la fotografía como protagonista, motivos para elegirlo y contacto directo por WhatsApp, correo o formulario.',
+    },
+    ca: {
+      name:
+        'Panes Patagonia',
+      category:
+        'Web per a obrador de pa',
+      summary:
+        'Web de producte per a un obrador artesanal que serveix l\'hostaleria.',
+      description:
+        'Web per a un obrador artesanal de pa d\'hamburguesa que treballa només amb hostaleria a tot Espanya: catàleg de pans amb la fotografia com a protagonista, motius per triar-lo i contacte directe per WhatsApp, correu o formulari.',
+    },
+    en: {
+      name:
+        'Panes Patagonia',
+      category:
+        'Bakery website',
+      summary:
+        'A product website for an artisan bakery that supplies hospitality.',
+      description:
+        'Website for an artisan burger-bun bakery that works only with hospitality across Spain: a catalogue of breads led by photography, reasons to choose it and direct contact by WhatsApp, email or form.',
+    },
   },
 }

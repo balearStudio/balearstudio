@@ -40,8 +40,8 @@ function ProjectMedia({ video, image, name }) {
   )
 }
 
-// Placeholder projects still have TODO copy (P3); keep them out of the list until it is written.
-const visibleProjects = projects.filter((p) => p.media.gallery.length > 0 && p.copy.es.summary !== 'TODO')
+// Only projects without media are skipped; private ones show a lock, preview ones a "Coming soon" badge.
+const visibleProjects = projects.filter((p) => p.media.gallery.length > 0)
 
 export default function Works() {
   const { t, lang } = useLanguage()
@@ -123,7 +123,9 @@ export default function Works() {
                             <path d="M4 12L12 4M6 4h6v6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </a>
-                      ) : null}
+                      ) : (
+                        <span className="project__soon">{t('work.comingSoon')}</span>
+                      )}
 
                       {hasGallery && (
                         <button

@@ -162,7 +162,7 @@ project except `finai` has a video, no image is over ~250 KB (AVIF/WebP), each v
 **Then:** tell the owner that the Predicasa demo account can be deleted, and delete
 `.env.local` (or blank the Predicasa lines in it).
 
-### [ ] P3. Project copy (ES / CA / EN)
+### [x] P3. Project copy (ES / CA / EN)
 
 **Goal:** real content for the 4 new projects and a refresh of the 3 existing ones.
 
@@ -376,3 +376,23 @@ _(Add anything surprising found during a task here.)_
   (`copy.es.summary !== 'TODO'`). P3 should remove that condition, and P4 replaces the filter with proper `preview` handling.
   Verified with `vite preview`: 3 cards, card videos play, the lightbox opens, no console errors, no failed requests.
 - Lighthouse was not run (that belongs to P4). The old video/PNGs are gone, so page weight has dropped a lot for the current 3 cards.
+
+**P3 (2026-09-24)**
+- No `TODO` copy is left in `src/data/projects/`; all 7 projects have name, category, summary and description in ES/CA/EN. The 3 featured ones
+  (Predicasa, Darrod, A2 Dental) also have challenge / solution / result for S3. Descriptions carry the searchable terms ("aplicación web con IA para
+  el sector inmobiliario en Mallorca", "web para academia de tenis", "web para clínica dental en Portals (Calvià)", "web para centro de fisioterapia").
+- **Sources.** The client repos and `balear-ewf/references/*/notes.md` had nothing usable: the notes describe *reference* sites (the old panespatagonia.com,
+  a login-gate screenshot of Predicasa), and `clients/` has no briefs for these projects. So the copy is written from what each live site says, plus what I
+  could detect in the served HTML/bundles. **I could not verify what balearSTUDIO did on each one, so please review `services` and the claims below.**
+- **`services`** are now vocabulary keys (`design`, `development`, `webapp`, `ai`, `booking`, `multilingual`), with the labels in
+  `work.services` in `translations.js`, so S3/S5 can show them in any language. `stack` is detected from the sites: Predicasa React + Vite + Supabase + Leaflet,
+  Darrod Next.js, A2 Dental and Melani plain HTML/CSS/JS (Melani also uses a Doctoralia booking widget), RMelendi Astro, Panes Patagonia React + Vite,
+  wedding React + Vite + GSAP.
+- **Facts to confirm:** Predicasa figures ("más de 17.000 anuncios", Idealista + Fotocasa, nightly revaluation) come from predicasa.com today and will go
+  stale. Darrod's "single calendar" booking comes from its booking section (I did not test that it submits). Melani "online booking" is the Doctoralia
+  widget. The results are qualitative on purpose: no metrics exist for the preview sites and I did not invent any.
+- RMelendi's description avoids gendered wording ("the content", not "his content") because the creator's pronouns are unknown.
+- **Works.jsx changes beyond P3's scope (small, so nothing ships unlabelled):** the `TODO` filter is gone, so all 7 cards render now, and `preview`
+  projects show a "Próximamente / Aviat / Coming soon" pill (`.project__soon`) instead of a link (D1). P4 should replace this with its own badge design.
+  Checked with `vite preview` in ES, CA and EN (390 px for EN): 7 cards, 4 badges, no console errors, no overflow.
+- Kept the wedding site's existing copy (already final, trilingual, and anonymous per D2).

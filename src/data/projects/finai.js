@@ -8,8 +8,8 @@ export default {
   status: 'private', // kept private at the client's request
   url: null,
   sector: 'web',
-  services: [], // TODO (P3)
-  stack: [], // TODO (P3)
+  services: ['design', 'development'],
+  stack: ['React', 'Vite', 'GSAP'],
   media: {
     cover: asset('/projects/finai/cover.webp'),
     video: null,

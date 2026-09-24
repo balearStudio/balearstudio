@@ -1,7 +1,5 @@
 import { asset } from '../asset'
 
-/* Placeholder — media is in place (P2); copy is still TODO until P3.
-   Works.jsx skips projects with TODO copy until then. */
 export default {
   slug: 'rmelendi',
   order: 4,
@@ -10,8 +8,8 @@ export default {
   status: 'preview', // set to 'live' and fill `url` when the site launches
   url: null,
   sector: 'web',
-  services: [], // TODO (P3)
-  stack: [], // TODO (P3)
+  services: ['design', 'development'],
+  stack: ['Astro'],
   media: {
     cover: asset('/projects/rmelendi/cover.webp'),
     video: asset('/projects/rmelendi/video.mp4'),
@@ -24,8 +22,35 @@ export default {
     ],
   },
   copy: {
-    es: { name: 'RMelendi', category: 'TODO', summary: 'TODO', description: 'TODO' },
-    ca: { name: 'RMelendi', category: 'TODO', summary: 'TODO', description: 'TODO' },
-    en: { name: 'RMelendi', category: 'TODO', summary: 'TODO', description: 'TODO' },
+    es: {
+      name:
+        'RMelendi',
+      category:
+        'Web para creador de contenido',
+      summary:
+        'Web de colaboraciones con marcas para un creador de fútbol.',
+      description:
+        'Web de colaboraciones para un creador de contenido de fútbol con más de 435.000 seguidores. Cada sección imita la plataforma donde vive el contenido (TikTok, YouTube e Instagram) y cierra con los formatos para trabajar juntos.',
+    },
+    ca: {
+      name:
+        'RMelendi',
+      category:
+        'Web per a creador de contingut',
+      summary:
+        'Web de col·laboracions amb marques per a un creador de futbol.',
+      description:
+        'Web de col·laboracions per a un creador de contingut de futbol amb més de 435.000 seguidors. Cada secció imita la plataforma on viu el contingut (TikTok, YouTube i Instagram) i tanca amb els formats per treballar junts.',
+    },
+    en: {
+      name:
+        'RMelendi',
+      category:
+        'Content creator website',
+      summary:
+        'A brand-collaboration website for a football content creator.',
+      description:
+        'A collaboration website for a football content creator with over 435,000 followers. Each section mimics the platform where the content lives (TikTok, YouTube and Instagram) and ends with the ways to work together.',
+    },
   },
 }

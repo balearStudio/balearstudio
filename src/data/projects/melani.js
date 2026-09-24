@@ -8,8 +8,8 @@ export default {
   status: 'live',
   url: 'https://centromelanicosta.com',
   sector: 'web',
-  services: [], // TODO (P3)
-  stack: [], // TODO (P3)
+  services: ['design', 'development', 'booking', 'multilingual'],
+  stack: ['HTML', 'CSS', 'JavaScript', 'Doctoralia'],
   media: {
     cover: asset('/projects/melani/cover.webp'),
     video: asset('/projects/melani/video.mp4'),
@@ -23,25 +23,34 @@ export default {
   },
   copy: {
     es: {
-      name: 'Centro Melani Costa',
-      category: 'Web profesional',
-      summary: 'Web clara y orientada a la conversión para un centro deportivo.',
+      name:
+        'Centro Melani Costa',
+      category:
+        'Web para centro de fisioterapia',
+      summary:
+        'Web de fisioterapia, rehabilitación y entrenamiento con reserva de cita en línea.',
       description:
-        'Sitio web para el centro de Melani Costa, medallista olímpica, centrado en claridad y conversión.',
+        'Web para el centro de fisioterapia y entrenamiento de Melani Costa, medallista olímpica: servicios, técnicas, el espacio del centro y reserva de cita en línea, en español, inglés y alemán.',
     },
     ca: {
-      name: 'Centre Melani Costa',
-      category: 'Web professional',
-      summary: 'Web clara i orientada a la conversió per a un centre esportiu.',
+      name:
+        'Centre Melani Costa',
+      category:
+        'Web per a centre de fisioteràpia',
+      summary:
+        'Web de fisioteràpia, rehabilitació i entrenament amb reserva de cita en línia.',
       description:
-        'Lloc web per al centre de la Melani Costa, medallista olímpica, centrat en claredat i conversió.',
+        'Web per al centre de fisioteràpia i entrenament de Melani Costa, medallista olímpica: serveis, tècniques, l\'espai del centre i reserva de cita en línia, en castellà, anglès i alemany.',
     },
     en: {
-      name: 'Centro Melani Costa',
-      category: 'Professional website',
-      summary: 'A clear, conversion-focused website for a sports centre.',
+      name:
+        'Centro Melani Costa',
+      category:
+        'Physiotherapy centre website',
+      summary:
+        'A physiotherapy, rehabilitation and training website with online appointment booking.',
       description:
-        'Website for the centre of Melani Costa, Olympic medallist, focused on clarity and conversion.',
+        'Website for the physiotherapy and training centre of Melani Costa, Olympic medallist: services, techniques, the centre itself and online appointment booking, in Spanish, English and German.',
     },
   },
 }

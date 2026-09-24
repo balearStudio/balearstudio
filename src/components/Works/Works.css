@@ -145,6 +145,18 @@
   transform: translateX(-50%) translateY(0);
 }
 
+/* "Coming soon" badge for unreleased (preview) projects --------- */
+.project__soon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-soft);
+}
+
 /* Gallery trigger --------------------------------------------- */
 .project__gallery-btn {
   color: var(--color-text);

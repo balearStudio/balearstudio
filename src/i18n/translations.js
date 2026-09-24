@@ -40,6 +40,15 @@ export const translations = {
       galleryClose: 'Cerrar',
       galleryPrev: 'Anterior',
       galleryNext: 'Siguiente',
+      comingSoon: 'Próximamente',
+      services: {
+        design: 'Diseño web',
+        development: 'Desarrollo web',
+        webapp: 'Aplicación web',
+        ai: 'Inteligencia Artificial',
+        booking: 'Reservas en línea',
+        multilingual: 'Multilingüe',
+      },
     },
     studio: {
       eyebrow: 'El estudio',
@@ -122,6 +131,15 @@ export const translations = {
       galleryClose: 'Tancar',
       galleryPrev: 'Anterior',
       galleryNext: 'Següent',
+      comingSoon: 'Aviat',
+      services: {
+        design: 'Disseny web',
+        development: 'Desenvolupament web',
+        webapp: 'Aplicació web',
+        ai: 'Intel·ligència Artificial',
+        booking: 'Reserves en línia',
+        multilingual: 'Multilingüe',
+      },
     },
     studio: {
       eyebrow: 'L\'estudi',
@@ -204,6 +222,15 @@ export const translations = {
       galleryClose: 'Close',
       galleryPrev: 'Previous',
       galleryNext: 'Next',
+      comingSoon: 'Coming soon',
+      services: {
+        design: 'Web design',
+        development: 'Web development',
+        webapp: 'Web application',
+        ai: 'Artificial Intelligence',
+        booking: 'Online booking',
+        multilingual: 'Multilingual',
+      },
     },
     studio: {
       eyebrow: 'The studio',
