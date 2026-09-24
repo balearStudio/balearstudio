@@ -2,10 +2,10 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import './LanguageSwitcher.css'
 
 export default function LanguageSwitcher() {
-  const { lang, setLang, languages } = useLanguage()
+  const { lang, setLang, languages, t } = useLanguage()
 
   return (
-    <div className="lang-switch" role="group" aria-label="Idioma">
+    <div className="lang-switch" role="group" aria-label={t('a11y.language')}>
       {languages.map((l, i) => (
         <span key={l.code} className="lang-switch__item">
           {i > 0 && <span className="lang-switch__sep" aria-hidden="true">/</span>}

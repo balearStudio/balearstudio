@@ -35,7 +35,7 @@ export default function Header() {
       <div className="header__inner container">
         <Logo onClick={closeMenu} />
 
-        <nav className="header__nav" aria-label="Principal">
+        <nav className="header__nav" aria-label={t('a11y.navMain')}>
           {links.map((l) => (
             <a key={l.href} href={l.href} className="header__link">
               {l.label}
@@ -48,7 +48,7 @@ export default function Header() {
           <button
             className={`header__burger ${menuOpen ? 'is-open' : ''}`}
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={menuOpen ? t('a11y.menuClose') : t('a11y.menuOpen')}
             aria-expanded={menuOpen}
           >
             <span></span>
@@ -59,7 +59,7 @@ export default function Header() {
 
       {/* Mobile overlay menu */}
       <div className={`header__mobile ${menuOpen ? 'is-open' : ''}`}>
-        <nav className="header__mobile-nav" aria-label="Móvil">
+        <nav className="header__mobile-nav" aria-label={t('a11y.navMobile')}>
           {links.map((l) => (
             <a key={l.href} href={l.href} onClick={closeMenu}>
               {l.label}

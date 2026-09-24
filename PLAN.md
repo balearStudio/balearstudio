@@ -5,6 +5,9 @@ Working doc. **Do one task per session**, and run `/clear` between sessions.
 **To start a session:** `Read PLAN.md, then do Task <ID>.`
 **To finish one:** tick the box, write anything unexpected under *Notes*, commit.
 Only tick a box once that task's **Done when** check actually passes.
+**Commits:** never add a `Co-Authored-By: Claude` line (or any Claude/AI attribution) to commit
+messages or PR descriptions in this repo. The owner asked for this explicitly (2026-09-24).
+Git author is repo-local `crisconh <christianreyesg@hotmail.com>`.
 
 Written 2026-09-24 after reviewing the repo and the live site.
 
@@ -291,6 +294,24 @@ Rich Results Test passes on one of them.
 ## Notes
 
 _(Add anything surprising found during a task here.)_
+
+**S1 (2026-09-24) — built and verified locally; box left unticked until the post-deploy checks pass.**
+- Local `npm run preview`: `/robots.txt`, `/sitemap.xml`, `/site.webmanifest`, `/apple-touch-icon.png`, `/404.html` and
+  the fonts all return 200. Lighthouse mobile SEO = **100**, Performance 96, Accessibility 90. No console errors,
+  no requests to Google Fonts, and the aria-labels switch language.
+- **Still to check after deploy:** the live `/robots.txt` and `/sitemap.xml` return 200 (both are 404 today), and
+  the JSON-LD passes the Rich Results Test / validator.schema.org (I can only confirm it parses as JSON locally).
+- Lighthouse crashes on Node 22.0.0 (`URL.parse is not a function` makes the canonical audit error and SEO read 0).
+  Preload a one-line shim: `URL.parse ||= (u,b)=>{try{return new URL(u,b)}catch{return null}}` via `NODE_OPTIONS=--require`,
+  or upgrade Node.
+- JSON-LD has no `sameAs`: no social profiles were found anywhere in the repo. Add them under S6.
+- Fonts are the variable Space Grotesk (300–700) in `public/fonts/` (latin preloaded, latin-ext on demand).
+  `apple-touch-icon.png`, `icon-192.png` and `icon-512.png` were rendered from `favicon.svg`. The 180 px one is full-bleed
+  (no rounded corners), as iOS expects.
+- Left for S4 (Lighthouse a11y 90): the closed chat panel is `aria-hidden` but still has focusable children, and
+  `.eyebrow`, `.footer__tagline` and some text spans fail colour contrast.
+- The hard-coded footer year (issue 7) was not in S1's scope and is untouched.
+- Line endings: the repo's working files are CRLF. Scripted edits need to handle that.
 
 **P1 (2026-09-24)**
 - **One intentional visual change:** Predicasa is now `status: 'live'` with `url: https://predicasa.com`

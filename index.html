@@ -30,13 +30,65 @@
 
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Google Fonts: Space Grotesk (commercial-use friendly, OFL licensed) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Space Grotesk (OFL) is self-hosted: see @font-face in src/styles/index.css.
+         Preload only the latin subset used by the main text. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/space-grotesk-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://balearstudio.com/#organization",
+            "name": "balearSTUDIO",
+            "url": "https://balearstudio.com/",
+            "logo": "https://balearstudio.com/icon-512.png",
+            "email": "info@balearstudio.com"
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://balearstudio.com/#business",
+            "name": "balearSTUDIO",
+            "url": "https://balearstudio.com/",
+            "image": "https://balearstudio.com/og.png",
+            "logo": "https://balearstudio.com/icon-512.png",
+            "email": "info@balearstudio.com",
+            "description": "Estudio digital en Mallorca. Diseñamos y construimos webs, aplicaciones y soluciones con Inteligencia Artificial.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Mallorca",
+              "addressRegion": "Illes Balears",
+              "addressCountry": "ES"
+            },
+            "areaServed": [
+              { "@type": "AdministrativeArea", "name": "Mallorca" },
+              { "@type": "AdministrativeArea", "name": "Illes Balears" }
+            ],
+            "knowsLanguage": ["es", "ca", "en"],
+            "parentOrganization": { "@id": "https://balearstudio.com/#organization" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://balearstudio.com/#website",
+            "name": "balearSTUDIO",
+            "url": "https://balearstudio.com/",
+            "inLanguage": ["es", "ca", "en"],
+            "publisher": { "@id": "https://balearstudio.com/#organization" }
+          }
+        ]
+      }
+    </script>
 
     <title>balearSTUDIO — Estudio digital en Mallorca</title>
   </head>
