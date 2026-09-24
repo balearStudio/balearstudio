@@ -200,7 +200,7 @@ mobile check of the page shows no CLS regression, and the owner signs off on the
 
 ## Track S — SEO
 
-### [ ] S1. Technical SEO quick wins (independent, can go first)
+### [x] S1. Technical SEO quick wins (independent, can go first)
 
 - Add `public/robots.txt` (allow all + `Sitemap: https://balearstudio.com/sitemap.xml`) and a
   static `public/sitemap.xml` with the home URL. S2 replaces it with a generated one.
@@ -216,7 +216,7 @@ mobile check of the page shows no CLS regression, and the owner signs off on the
 **Done when:** `/robots.txt` and `/sitemap.xml` return 200 after deploy, the JSON-LD passes
 Google's Rich Results Test / validator.schema.org, and Lighthouse SEO is 100.
 
-### [ ] S2. Prerender + real URLs per language
+### [x] S2. Prerender + real URLs per language
 
 **Goal:** every language has its own crawlable, fully rendered HTML page.
 
@@ -295,7 +295,7 @@ Rich Results Test passes on one of them.
 
 _(Add anything surprising found during a task here.)_
 
-**S1 (2026-09-24) — built and verified locally; box left unticked until the post-deploy checks pass.**
+**S1 (2026-09-24) — built, verified locally, deployed and confirmed live by the owner.**
 - Local `npm run preview`: `/robots.txt`, `/sitemap.xml`, `/site.webmanifest`, `/apple-touch-icon.png`, `/404.html` and
   the fonts all return 200. Lighthouse mobile SEO = **100**, Performance 96, Accessibility 90. No console errors,
   no requests to Google Fonts, and the aria-labels switch language.
@@ -329,7 +329,7 @@ _(Add anything surprising found during a task here.)_
 - `summary` for the 3 existing projects is a new short line I wrote in ES/CA/EN; review it in P3.
 
 
-**S2 (2026-09-24) — built and verified locally; box left unticked until the post-deploy checks pass.**
+**S2 (2026-09-24) — built, verified locally, deployed and confirmed live by the owner.**
 - `npm run build` is now `vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs`.
   It writes `dist/index.html` (ES), `dist/ca/index.html`, `dist/en/index.html`, `sitemap.xml` (with hreflang + x-default) and `robots.txt`.
   `public/robots.txt` and `public/sitemap.xml` were deleted; the build generates them.
