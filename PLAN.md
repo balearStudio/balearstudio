@@ -176,7 +176,7 @@ project except `finai` has a video, no image is over ~250 KB (AVIF/WebP), each v
 
 **Done when:** no `TODO` copy is left in `src/data/projects/`, and all three languages are filled.
 
-### [ ] P4. Redesign the Works section
+### [x] P4. Redesign the Works section
 
 **Goal:** show 7+ projects clearly while keeping the monochrome, Swiss-minimal identity.
 
@@ -397,7 +397,7 @@ _(Add anything surprising found during a task here.)_
   Checked with `vite preview` in ES, CA and EN (390 px for EN): 7 cards, 4 badges, no console errors, no overflow.
 - Kept the wedding site's existing copy (already final, trilingual, and anonymous per D2).
 
-**P4 (2026-09-24) — built and verified locally; waiting for the owner's sign-off on the look (the box stays unticked until then).**
+**P4 (2026-09-24) — built and verified locally, deployed, and signed off by the owner after seeing it live.**
 - Works is now 3 featured cards (Predicasa full-width lead, Darrod + A2 Dental two-up; driven by `featured` + `order`, so D4 holds) and a
   compact grid of the other 4 under a "More projects" heading (`work.moreTitle`). Cards are media-first and keep the greyscale → colour hover.
   Status: `live` → "Visit site" link (name is linked too), `preview` → "Coming soon" pill and no link, `private` → lock + tooltip.
