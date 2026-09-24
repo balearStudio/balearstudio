@@ -240,7 +240,7 @@ Google's Rich Results Test / validator.schema.org, and Lighthouse SEO is 100.
 English hero and project copy (no JS needed), hreflang is valid in all 3 pages, there are no
 hydration warnings in the console, and GitHub Pages serves `/ca/` and `/en/` correctly.
 
-### [ ] S3. Case-study pages per project (needs S2 + P1; better after P2/P3)
+### [x] S3. Case-study pages per project (needs S2 + P1; better after P2/P3)
 
 **Goal:** one indexable page per project, which ranks for sector searches and gives the portfolio depth.
 
@@ -415,7 +415,7 @@ _(Add anything surprising found during a task here.)_
   short of S4's targets (≥95 / ≥95).
 - Not checked: a real tablet or phone (only Playwright viewports), and the touch behaviour of the hover colour reveal (it stays greyscale on touch, as before).
 
-**S3 (2026-09-24) — built and verified locally; pushed, awaiting live check.**
+**S3 (2026-09-24) — built and verified locally, deployed, and confirmed live by the owner.**
 - URLs: `/proyectos/<slug>/`, `/ca/projectes/<slug>/`, `/en/work/<slug>/` for the 6 non-private projects (18 pages, 21 with the homes, all in `sitemap.xml`
   with hreflang + x-default). `finai` (private) has no page. Routes live in `src/routes.js` (`PAGES`, `pagePath`, `pageFromPath`); `LANGUAGES` gained `projectsPath`.
   Still no router: `App` renders `ProjectPage` when the language context has a `slug`, and `prerender.mjs` loops over `PAGES`.
