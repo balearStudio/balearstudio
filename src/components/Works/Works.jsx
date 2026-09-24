@@ -1,13 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { projects } from '../../data/projects'
 import Lightbox from '../Lightbox/Lightbox'
 import './Works.css'
 
-const prefersReducedMotion =
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
  * Card thumbnail. Plays `video` if the project has one and it loads
@@ -18,7 +15,13 @@ const prefersReducedMotion =
  */
 function ProjectMedia({ video, image, name }) {
   const [videoFailed, setVideoFailed] = useState(false)
-  const showVideo = video && !prefersReducedMotion && !videoFailed
+  // Read after mount: the prerendered HTML can't know the visitor's preference,
+  // and reading it during render would mismatch on hydration.
+  const [reducedMotion, setReducedMotion] = useState(false)
+  useEffect(() => {
+    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [])
+  const showVideo = video && !reducedMotion && !videoFailed
 
   return showVideo ? (
     <video

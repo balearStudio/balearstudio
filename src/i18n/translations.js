@@ -3,10 +3,12 @@
    Access with the useLanguage() hook's `t` helper.
    ============================================================ */
 
+// `path` is the URL each language is served from (Spanish stays at the root so
+// the already-indexed URL doesn't change); `locale` feeds og:locale.
 export const LANGUAGES = [
-  { code: 'es', label: 'ES', name: 'Español' },
-  { code: 'ca', label: 'CA', name: 'Català' },
-  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'es', label: 'ES', name: 'Español', path: '/', locale: 'es_ES' },
+  { code: 'ca', label: 'CA', name: 'Català', path: '/ca/', locale: 'ca_ES' },
+  { code: 'en', label: 'EN', name: 'English', path: '/en/', locale: 'en_GB' },
 ]
 
 export const DEFAULT_LANG = 'es'

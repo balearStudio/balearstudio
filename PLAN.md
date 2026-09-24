@@ -327,3 +327,29 @@ _(Add anything surprising found during a task here.)_
 - The `asset()` helper moved to `src/data/asset.js`. `sector` values: `web | ecommerce | ai-app`.
 - `work.items.*` was removed from `translations.js`; UI labels (`work.visit`, etc.) stay.
 - `summary` for the 3 existing projects is a new short line I wrote in ES/CA/EN; review it in P3.
+
+
+**S2 (2026-09-24) — built and verified locally; box left unticked until the post-deploy checks pass.**
+- `npm run build` is now `vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs`.
+  It writes `dist/index.html` (ES), `dist/ca/index.html`, `dist/en/index.html`, `sitemap.xml` (with hreflang + x-default) and `robots.txt`.
+  `public/robots.txt` and `public/sitemap.xml` were deleted; the build generates them.
+- Per-language head tags (title, description, canonical, hreflang, OG, JSON-LD) live in `src/seo.js`. The generic tags stay in
+  `index.html`, which now holds `<!--app-head-->` / `<!--app-html-->` markers. `vite dev` serves the bare template (no SSR); for a real
+  check use `npm run build && npm run preview`.
+- No router: each language is a separate page, `LanguageProvider` takes `lang` as a prop, and the LanguageSwitcher is plain `<a href>` links.
+  S3 needs routes for `/proyectos/<slug>/` etc. Extend `LANGUAGES` / `prerender.mjs` for that rather than bolting on react-router.
+- **Deviation from the plan on redirects:** there is **no browser-language redirect**. Googlebot reports `navigator.language` as en-US, so it
+  would be sent to `/en/`. The only redirect (`src/i18n/preference.js`) fires on `/` and only for a language the visitor explicitly clicked
+  before. A fresh en-US visitor stays on `/` (verified).
+- SSR guards: the Chat widget is wrapped in `ClientOnly` (so it is not in the prerendered HTML); Works reads `prefers-reduced-motion` after
+  mount; Hero uses an isomorphic layout effect. `gsap` is bundled into the SSR build (`ssr.noExternal`) because Node can't import its CJS plugins.
+- Hero entrance: the prerendered HTML would flash visible before hydration, so `Hero.css` hides the animated elements under `.js` (class set by
+  an inline script in index.html) and `Hero.jsx` uses `fromTo`. It must set `y: 0` too, or GSAP parses the CSS `translateY(120%)` into px and
+  the lines never reach 0.
+- Verified locally (Playwright vs `vite preview`): all 3 pages return the right `<html lang>`, title and hero copy in the raw HTML; no console
+  errors or hydration errors (checked on the production build, where mismatches surface as React errors); the hero animation ends at 0; the
+  switcher links work; the no-JS render shows the content; reduced motion at 390 px has no horizontal overflow.
+- **Still to check after deploy:** `curl https://balearstudio.com/en/` and `/ca/` return the translated HTML (GitHub Pages serves them as
+  directory indexes), live `/sitemap.xml` and `/robots.txt` are 200, and hreflang validates.
+- The GSAP warning "target not found" under reduced motion comes from `useScrollReveal` (sections without a reveal group) and predates S2.
+- On Windows, stop `vite preview` before rebuilding: it locks `dist/predicasa-video.mp4` and the build fails with EPERM.

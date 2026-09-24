@@ -9,4 +9,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  // gsap ships CommonJS plugin files whose named exports Node can't see; bundle
+  // it into the prerender build instead of importing it at runtime.
+  ssr: { noExternal: ['gsap'] },
 })

@@ -1,26 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { translations, DEFAULT_LANG, LANGUAGES } from './translations'
 
-const STORAGE_KEY = 'balearstudio-lang'
 const LanguageContext = createContext(null)
 
-function getInitialLang() {
-  if (typeof window === 'undefined') return DEFAULT_LANG
-  const stored = window.localStorage.getItem(STORAGE_KEY)
-  if (stored && translations[stored]) return stored
-  const browser = window.navigator.language?.slice(0, 2)
-  if (browser && translations[browser]) return browser
-  return DEFAULT_LANG
-}
-
-export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState(getInitialLang)
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, lang)
-    document.documentElement.lang = lang
-  }, [lang])
-
+/** The language is fixed per URL (/, /ca/, /en/), so it arrives as a prop from
+ *  the entry point instead of living in state — switching is a page navigation. */
+export function LanguageProvider({ lang = DEFAULT_LANG, children }) {
   const value = useMemo(() => {
     // t('a.b.c') — dot-path lookup into the active language dictionary.
     const t = (path) => {
@@ -32,7 +17,7 @@ export function LanguageProvider({ children }) {
       }
       return node
     }
-    return { lang, setLang, t, languages: LANGUAGES }
+    return { lang, t, languages: LANGUAGES }
   }, [lang])
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>

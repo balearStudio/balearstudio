@@ -5,6 +5,7 @@ import Studio from './components/Studio/Studio'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import Chat from './components/Chat/Chat'
+import ClientOnly from './components/ClientOnly'
 
 export default function App() {
   return (
@@ -17,7 +18,9 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-      <Chat />
+      <ClientOnly>
+        <Chat />
+      </ClientOnly>
     </>
   )
 }
