@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw project captures (scripts/capture-projects.mjs)
+.capture

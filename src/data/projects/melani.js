@@ -11,10 +11,15 @@ export default {
   services: [], // TODO (P3)
   stack: [], // TODO (P3)
   media: {
-    cover: asset('/melanicosta_main.png'),
-    video: null,
-    poster: null,
-    gallery: [asset('/melanicosta_main.png'), asset('/melanicosta2.png')],
+    cover: asset('/projects/melani/cover.webp'),
+    video: asset('/projects/melani/video.mp4'),
+    poster: asset('/projects/melani/poster.webp'),
+    gallery: [
+      asset('/projects/melani/cover.webp'),
+      asset('/projects/melani/gallery-01.webp'),
+      asset('/projects/melani/gallery-02.webp'),
+      asset('/projects/melani/gallery-03.webp'),
+    ],
   },
   copy: {
     es: {

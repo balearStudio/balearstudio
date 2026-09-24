@@ -11,10 +11,13 @@ export default {
   services: [], // TODO (P3)
   stack: [], // TODO (P3)
   media: {
-    cover: asset('/finaivicenc_main.png'),
+    cover: asset('/projects/finai/cover.webp'),
     video: null,
     poster: null,
-    gallery: [asset('/finaivicenc_main.png'), asset('/finaivicenc2.png')],
+    gallery: [
+      asset('/projects/finai/cover.webp'),
+      asset('/projects/finai/gallery-01.webp'),
+    ],
   },
   copy: {
     es: {

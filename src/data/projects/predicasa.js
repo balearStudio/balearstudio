@@ -11,15 +11,14 @@ export default {
   services: [], // TODO (P3)
   stack: [], // TODO (P3)
   media: {
-    cover: asset('/predicasa_main.png'),
-    video: asset('/predicasa-video.mp4'),
-    poster: asset('/predicasa_main.png'),
+    cover: asset('/projects/predicasa/cover.webp'),
+    video: asset('/projects/predicasa/video.mp4'),
+    poster: asset('/projects/predicasa/poster.webp'),
     gallery: [
-      asset('/predicasa_main.png'),
-      asset('/predicasa2.png'),
-      asset('/predicasa3.png'),
-      asset('/predicasa4.png'),
-      asset('/predicasa5.png'),
+      asset('/projects/predicasa/cover.webp'),
+      asset('/projects/predicasa/gallery-01.webp'),
+      asset('/projects/predicasa/gallery-02.webp'),
+      asset('/projects/predicasa/gallery-03.webp'),
     ],
   },
   copy: {

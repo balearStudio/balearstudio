@@ -129,7 +129,7 @@ URLs, and S2 creates the routing and prerender that they rely on.
 **Done when:** `npm run build` passes, and the page looks and behaves exactly as before for the
 3 existing projects, including the gallery.
 
-### [ ] P2. Capture and optimise project media
+### [x] P2. Capture and optimise project media
 
 **Goal:** give every project light, consistent screenshots, plus a short video where it helps.
 
@@ -353,3 +353,26 @@ _(Add anything surprising found during a task here.)_
   directory indexes), live `/sitemap.xml` and `/robots.txt` are 200, and hreflang validates.
 - The GSAP warning "target not found" under reduced motion comes from `useScrollReveal` (sections without a reveal group) and predates S2.
 - On Windows, stop `vite preview` before rebuilding: it locks `dist/predicasa-video.mp4` and the build fails with EPERM.
+
+**P2 (2026-09-24)**
+- `npm run capture` (`scripts/capture-projects.mjs`, helpers in `scripts/optimise-media.mjs`) captures every project and writes
+  `public/projects/<slug>/`. Options: slugs as arguments, `--no-video`, `--optimise-only`. Raw captures stay in `.capture/` (gitignored).
+  New dev dependencies: `playwright` (1.61.0, browsers are the shared Playwright cache), `sharp`, `ffmpeg-static`.
+- Each project has `cover`, `gallery-01…03` (two desktop sections plus one 390 px mobile shot), `poster.webp` and `video.mp4`/`video.webm`, with
+  AVIF + WebP at 1600w and `-800` variants. Every image is under 250 KB (the biggest is ~116 KB) and every video is under 1.5 MB (the largest is 1.47 MB).
+  Screenshots are taken at 2× and downscaled, so they stay sharp. `media.gallery` in the data files is `[cover, gallery-01, …]`, pointing at the `.webp` files
+  and `video.mp4` for now; P4 adds `<picture>` with AVIF and `srcset`.
+- Predicasa: the script signs in once with the demo account and reuses the session **in memory only** (`storageState`, never written), so the
+  recording starts already logged in and no credentials appear on screen. The journey is search "Palma" → results → first listing → price
+  analysis and the rental-yield verdict (12.7 s). Every frame was checked: no personal data, only the "DE" avatar initials and a business name.
+  The listing photos on predicasa.com carry Idealista watermarks, so the gallery/video show third-party listing images. Worth a glance from the owner.
+- The demo account can be deleted now (D3). I blanked the Predicasa values in `.env.local` rather than deleting the file.
+- RMelendi's site imitates TikTok/YouTube/Instagram on purpose, so its gallery shots are those sections (the owner confirmed it is the desired look).
+- Marketing sites are captured with sections snapped under the sticky header, cookie/consent buttons are clicked away, and the scroll video is
+  capped at ~4200 px (about 10 s). The wedding site (`finai`) only had its two PNGs re-encoded: no video, and its `poster` is null. Its source PNGs
+  are now deleted, so re-running the script keeps its existing output.
+- The old root PNGs and `predicasa-video.mp4` are deleted. `public/` is now 16 MB, and most of that is the 12 videos (P4 must use `preload="none"`).
+- **Works.jsx:** the four new projects now have media but still have TODO copy, so the filter hides them until P3
+  (`copy.es.summary !== 'TODO'`). P3 should remove that condition, and P4 replaces the filter with proper `preview` handling.
+  Verified with `vite preview`: 3 cards, card videos play, the lightbox opens, no console errors, no failed requests.
+- Lighthouse was not run (that belongs to P4). The old video/PNGs are gone, so page weight has dropped a lot for the current 3 cards.

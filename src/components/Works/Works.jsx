@@ -40,8 +40,8 @@ function ProjectMedia({ video, image, name }) {
   )
 }
 
-// Placeholder projects have no media yet (P2); keep them out of the list until they do.
-const visibleProjects = projects.filter((p) => p.media.gallery.length > 0)
+// Placeholder projects still have TODO copy (P3); keep them out of the list until it is written.
+const visibleProjects = projects.filter((p) => p.media.gallery.length > 0 && p.copy.es.summary !== 'TODO')
 
 export default function Works() {
   const { t, lang } = useLanguage()
