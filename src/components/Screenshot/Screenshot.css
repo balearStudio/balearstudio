@@ -1,0 +1,56 @@
+.shot {
+  margin: 0;
+}
+
+.shot__frame {
+  border: 1px solid var(--color-line-strong);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-bg);
+  box-shadow: 0 24px 60px -30px rgba(10, 10, 10, 0.25);
+}
+
+.shot__bar {
+  display: flex;
+  gap: 6px;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-bg-alt);
+}
+.shot__bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-line-strong);
+}
+
+/* All images share one 16:10 box; only the active one is visible. */
+.shot__screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+}
+.shot__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out);
+}
+.shot__img.is-active {
+  opacity: 1;
+}
+
+.shot__caption {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+}
+
+@media (max-width: 540px) {
+  .shot__frame { border-radius: 10px; }
+  .shot__bar { padding: 0.5rem 0.7rem; }
+  .shot__bar span { width: 7px; height: 7px; }
+}

@@ -26,10 +26,12 @@ export default function Header() {
   // On a case study the sections live on the home page.
   const base = slug ? homePath(lang) : ''
   const links = [
-    { href: `${base}#work`, label: t('nav.work') },
+    { href: `${base}#como-funciona`, label: t('nav.how') },
+    { href: `${base}#casos`, label: t('nav.cases') },
+    { href: `${base}#seguridad`, label: t('nav.security') },
     { href: `${base}#studio`, label: t('nav.studio') },
-    { href: `${base}#contact`, label: t('nav.contact') },
   ]
+  const demoHref = `${base}#contact`
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -48,6 +50,9 @@ export default function Header() {
 
         <div className="header__right">
           <LanguageSwitcher />
+          <a href={demoHref} className="btn-primary header__cta">
+            {t('nav.demo')}
+          </a>
           <button
             className={`header__burger ${menuOpen ? 'is-open' : ''}`}
             onClick={() => setMenuOpen((v) => !v)}
@@ -68,6 +73,9 @@ export default function Header() {
               {l.label}
             </a>
           ))}
+          <a href={demoHref} onClick={closeMenu} className="btn-primary header__mobile-cta">
+            {t('nav.demo')}
+          </a>
         </nav>
         <div className="header__mobile-lang">
           <LanguageSwitcher />

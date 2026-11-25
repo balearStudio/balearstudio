@@ -19,7 +19,7 @@
   color: #ffffff;
   font-size: clamp(2.2rem, 6.5vw, 5rem);
   letter-spacing: -0.03em;
-  max-width: 16ch;
+  max-width: 18ch;
   margin-top: 0.5rem;
 }
 
@@ -29,14 +29,16 @@
   color: #9a9a9a;
 }
 
-/* Big email link ------------------------------------------- */
+/* Email fallback, under the button -------------------------- */
+.contact__or {
+  font-size: 1rem;
+  color: #7d7d7d;
+}
 .contact__mail {
   position: relative;
-  margin-top: 1.5rem;
-  font-size: clamp(1.4rem, 4.5vw, 3rem);
+  display: inline-block;
   font-weight: 500;
   color: #ffffff;
-  letter-spacing: -0.02em;
 }
 .contact__mail-underline {
   position: absolute;
@@ -55,7 +57,7 @@
 }
 
 .contact__cta {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   background: #ffffff;
   color: var(--color-ink);
 }

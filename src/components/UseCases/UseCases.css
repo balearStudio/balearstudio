@@ -1,0 +1,109 @@
+.cases .eyebrow {
+  margin-bottom: 2rem;
+}
+
+.cases__title {
+  font-size: clamp(1.8rem, 4.2vw, 3.3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  max-width: 20ch;
+}
+
+/* Departments ------------------------------------------------ */
+.cases__depts {
+  list-style: none;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--color-line);
+}
+.cases__dept {
+  display: grid;
+  grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 3.5rem);
+  align-items: baseline;
+  padding-block: 1.2rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.cases__dept-name {
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.cases__dept-text {
+  color: var(--color-text);
+  max-width: 62ch;
+}
+
+/* Packs ------------------------------------------------------ */
+.cases__packs-head {
+  margin-top: clamp(3rem, 5vw, 4.5rem);
+}
+.cases__packs-title {
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+}
+.cases__packs-body {
+  margin-top: 0.6rem;
+  color: var(--color-text);
+}
+
+.cases__packs {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-top: 1.8rem;
+}
+.cases__pack {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.cases__pack-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+.cases__pack-name {
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+}
+.cases__pack-tools {
+  list-style: none;
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.cases__pack-tools li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  font-size: 0.98rem;
+  color: var(--color-ink);
+}
+.cases__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  flex-shrink: 0;
+  transform: translateY(-0.2em);
+}
+
+.cases__own {
+  margin-top: 1.8rem;
+  max-width: 60ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  color: var(--color-ink);
+}
+
+@media (max-width: 900px) {
+  .cases__packs { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .cases__dept {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}

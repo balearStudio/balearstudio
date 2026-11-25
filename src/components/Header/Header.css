@@ -25,7 +25,7 @@
 
 .header__nav {
   display: flex;
-  gap: 2.4rem;
+  gap: 2rem;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -62,6 +62,13 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
+}
+
+/* Demo button: a compact .btn-primary. Scoped under .header because
+   Hero.css (where .btn-primary lives) loads after this file. */
+.header .header__cta {
+  padding: 0.6rem 1.15rem;
+  font-size: 0.85rem;
 }
 
 /* Burger ---------------------------------------------------- */
@@ -134,13 +141,31 @@
   color: var(--color-ink);
   padding-block: 0.3rem;
 }
+.header__mobile-nav a.header__mobile-cta {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 1.5rem;
+  padding: 1rem 1.6rem;
+  font-size: 1rem;
+  color: var(--color-bg);
+  letter-spacing: 0;
+  line-height: 1.2;
+}
 .header__mobile-lang {
   padding-top: 1.5rem;
   flex-shrink: 0;
 }
 
-@media (max-width: 800px) {
+/* The centred nav and the right-hand group (languages + demo
+   button) collide below ~1180px, so the burger takes over there. */
+@media (max-width: 1180px) {
   .header__nav { display: none; }
   .header__burger { display: flex; }
+}
+@media (max-width: 800px) {
   .header__right .lang-switch { display: none; }
+}
+/* Phones: the demo button lives in the menu (and in the hero). */
+@media (max-width: 520px) {
+  .header .header__cta { display: none; }
 }

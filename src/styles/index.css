@@ -114,6 +114,9 @@ button {
 
 .section {
   padding-block: var(--section-pad);
+  /* The fixed header is 78px; the section padding covers most of it,
+     this keeps anchored headings from sliding under the header. */
+  scroll-margin-top: 24px;
 }
 
 /* Small caps eyebrow label --------------------------------- */

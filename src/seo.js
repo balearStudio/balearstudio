@@ -9,7 +9,12 @@ import { publicProjects } from './data/projects/index.js'
 import { PAGES, pagePath } from './routes.js'
 
 export const SITE_ORIGIN = 'https://balearstudio.com'
-export const OG_IMAGE = `${SITE_ORIGIN}/og.png`
+// Social card per language (public/og*.png, 1200×630).
+export const OG_IMAGES = {
+  es: `${SITE_ORIGIN}/og.png`,
+  ca: `${SITE_ORIGIN}/og-ca.png`,
+  en: `${SITE_ORIGIN}/og-en.png`,
+}
 
 export const langUrl = (code) =>
   SITE_ORIGIN + LANGUAGES.find((l) => l.code === code).path
@@ -17,25 +22,41 @@ export const langUrl = (code) =>
 /** Absolute URL of a page: the home page when `slug` is null, else a case study. */
 export const pageUrl = (code, slug = null) => SITE_ORIGIN + pagePath(code, slug)
 
-// Titles and descriptions are written around what local clients search for.
+// Home page: the site now leads with ToolDeck (product claims follow
+// ToolDeck/docs/guia-comercial.md, section 12: no prices, no "AI included").
+// Local searches ("web para academia de tenis…") are covered by the case-study
+// pages. Title ≤ 60 characters, description ≤ 160.
+// `studio` describes balearSTUDIO itself, for the ProfessionalService node.
 export const meta = {
   es: {
-    title: 'Diseño web y soluciones con IA en Mallorca | balearSTUDIO',
+    title: 'ToolDeck: herramientas de IA para tu equipo | balearSTUDIO',
     description:
-      'Estudio digital en Mallorca. Diseñamos y construimos webs, tiendas online, aplicaciones y chatbots con Inteligencia Artificial para empresas.',
-    imageAlt: 'balearSTUDIO — estudio digital en Mallorca',
+      'ToolDeck convierte los prompts que tu empresa repite en herramientas con formulario que entregan Word, Excel, PowerPoint o PDF con tu plantilla. Datos en la UE.',
+    ogTitle: 'ToolDeck, by balearSTUDIO',
+    ogDescription: 'Del prompt de una persona a la herramienta de toda la empresa.',
+    imageAlt: 'ToolDeck, by balearSTUDIO — Del prompt de una persona a la herramienta de toda la empresa.',
+    app: 'Plataforma web que convierte los prompts de IA que una empresa repite en herramientas con formulario que entregan documentos Word, Excel, PowerPoint o PDF con la plantilla de la empresa.',
+    studio: 'Estudio de Mallorca que crea ToolDeck y desarrolla webs, aplicaciones y soluciones a medida con Inteligencia Artificial.',
   },
   ca: {
-    title: 'Disseny web i solucions amb IA a Mallorca | balearSTUDIO',
+    title: "ToolDeck: eines d'IA per al teu equip | balearSTUDIO",
     description:
-      'Estudi digital a Mallorca. Dissenyem i construïm webs, botigues en línia, aplicacions i xatbots amb Intel·ligència Artificial per a empreses.',
-    imageAlt: 'balearSTUDIO — estudi digital a Mallorca',
+      'ToolDeck converteix els prompts que repeteix la teva empresa en eines amb formulari que lliuren Word, Excel, PowerPoint o PDF amb la teva plantilla.',
+    ogTitle: 'ToolDeck, by balearSTUDIO',
+    ogDescription: "Del prompt d'una persona a l'eina de tota l'empresa.",
+    imageAlt: "ToolDeck, by balearSTUDIO — Del prompt d'una persona a l'eina de tota l'empresa.",
+    app: "Plataforma web que converteix els prompts d'IA que una empresa repeteix en eines amb formulari que lliuren documents Word, Excel, PowerPoint o PDF amb la plantilla de l'empresa.",
+    studio: 'Estudi de Mallorca que crea ToolDeck i desenvolupa webs, aplicacions i solucions a mida amb Intel·ligència Artificial.',
   },
   en: {
-    title: 'Web design and AI solutions in Mallorca | balearSTUDIO',
+    title: 'ToolDeck: AI tools for your whole team | balearSTUDIO',
     description:
-      'Digital studio in Mallorca. We design and build websites, online stores, apps and AI chatbots for businesses.',
-    imageAlt: 'balearSTUDIO — digital studio in Mallorca',
+      'ToolDeck turns the prompts your company repeats into form-based tools that deliver Word, Excel, PowerPoint or PDF files in your template. Data in the EU.',
+    ogTitle: 'ToolDeck, by balearSTUDIO',
+    ogDescription: "From one person's prompt to a tool for the whole company.",
+    imageAlt: "ToolDeck, by balearSTUDIO — From one person's prompt to a tool for the whole company.",
+    app: "A web platform that turns the AI prompts a company repeats into form-based tools that deliver Word, Excel, PowerPoint or PDF documents in the company's template.",
+    studio: 'Studio in Mallorca that makes ToolDeck and builds custom websites, apps and AI solutions.',
   },
 }
 
@@ -61,7 +82,7 @@ const websiteNode = {
 }
 
 function jsonLd(lang) {
-  const { description } = meta[lang]
+  const { description, studio, app } = meta[lang]
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -71,10 +92,10 @@ function jsonLd(lang) {
         '@id': `${SITE_ORIGIN}/#business`,
         name: 'balearSTUDIO',
         url: `${SITE_ORIGIN}/`,
-        image: OG_IMAGE,
+        image: OG_IMAGES[lang],
         logo: `${SITE_ORIGIN}/icon-512.png`,
         email: 'info@balearstudio.com',
-        description,
+        description: studio,
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Mallorca',
@@ -88,6 +109,19 @@ function jsonLd(lang) {
         knowsLanguage: LANGUAGES.map((l) => l.code),
         parentOrganization: { '@id': `${SITE_ORIGIN}/#organization` },
       },
+      // No offers, prices or ratings on purpose: prices aren't set yet and
+      // there are no public reviews.
+      {
+        '@type': 'SoftwareApplication',
+        '@id': `${SITE_ORIGIN}/#tooldeck`,
+        name: 'ToolDeck',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description: app,
+        url: langUrl(lang),
+        creator: { '@id': `${SITE_ORIGIN}/#organization` },
+        publisher: { '@id': `${SITE_ORIGIN}/#organization` },
+      },
       websiteNode,
       {
         '@type': 'WebPage',
@@ -97,7 +131,7 @@ function jsonLd(lang) {
         description,
         inLanguage: lang,
         isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
-        about: { '@id': `${SITE_ORIGIN}/#business` },
+        about: { '@id': `${SITE_ORIGIN}/#tooldeck` },
       },
     ],
   }
@@ -179,9 +213,10 @@ function projectJsonLd(lang, project) {
  *  Open Graph / Twitter and JSON-LD. `slug` is null for the home page. */
 export function buildHead(lang, slug = null) {
   const project = slug ? publicProjects.find((p) => p.slug === slug) : null
-  const { title, description, imageAlt, image } = project
-    ? projectMeta(lang, project)
-    : { ...meta[lang], image: { url: OG_IMAGE, width: 1200, height: 630 } }
+  const { title, description, imageAlt, image, ogTitle = title, ogDescription = description } =
+    project
+      ? projectMeta(lang, project)
+      : { ...meta[lang], image: { url: OG_IMAGES[lang], width: 1200, height: 630 } }
   const graph = project ? projectJsonLd(lang, project) : jsonLd(lang)
   const url = pageUrl(lang, slug)
   const current = LANGUAGES.find((l) => l.code === lang)
@@ -196,8 +231,8 @@ export function buildHead(lang, slug = null) {
     `<link rel="alternate" hreflang="x-default" href="${pageUrl(DEFAULT_LANG, slug)}" />`,
     // Open Graph / Twitter. Scrapers fetch these server-side, so og:image and
     // og:url must be absolute URLs.
-    `<meta property="og:title" content="${esc(title)}" />`,
-    `<meta property="og:description" content="${esc(description)}" />`,
+    `<meta property="og:title" content="${esc(ogTitle)}" />`,
+    `<meta property="og:description" content="${esc(ogDescription)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:site_name" content="balearSTUDIO" />`,

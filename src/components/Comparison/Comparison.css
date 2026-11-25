@@ -1,0 +1,105 @@
+.compare {
+  background: var(--color-bg-alt);
+}
+
+.compare .eyebrow {
+  margin-bottom: 2rem;
+}
+
+.compare__title {
+  font-size: clamp(1.8rem, 4.2vw, 3.3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  max-width: 22ch;
+}
+
+.compare__table {
+  width: 100%;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.compare__table th,
+.compare__table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 1.1rem 1.5rem 1.1rem 0;
+  border-bottom: 1px solid var(--color-line-strong);
+}
+.compare__table thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  padding-bottom: 0.9rem;
+}
+.compare__table thead th.compare__tool {
+  color: var(--color-ink);
+}
+/* table-layout: fixed takes column widths from the first row. */
+.compare__table thead td {
+  width: 22%;
+  border-bottom: 1px solid var(--color-line-strong);
+}
+.compare__table tbody th {
+  width: 22%;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.compare__table tbody td {
+  color: var(--color-text-soft);
+}
+.compare__table tbody td.compare__tool {
+  color: var(--color-ink);
+}
+
+.compare__note {
+  margin-top: 1.6rem;
+  max-width: 60ch;
+  color: var(--color-text);
+}
+
+/* Stacked cards on narrow screens ---------------------------- */
+@media (max-width: 700px) {
+  .compare__table,
+  .compare__table tbody,
+  .compare__table tr,
+  .compare__table th,
+  .compare__table td {
+    display: block;
+    width: 100%;
+  }
+  .compare__table thead {
+    display: none;
+  }
+  .compare__table tr {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--color-line-strong);
+  }
+  .compare__table tbody th,
+  .compare__table tbody td {
+    width: 100%;
+    border: 0;
+    padding: 0;
+  }
+  .compare__table tbody th {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+  .compare__table tbody td {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-block: 0.25rem;
+  }
+  .compare__table tbody td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+    padding-top: 0.2em;
+  }
+}

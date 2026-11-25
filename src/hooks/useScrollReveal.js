@@ -26,8 +26,11 @@ export function useScrollReveal(opts = {}) {
       '(prefers-reduced-motion: reduce)',
     ).matches
     if (prefersReduced) {
-      gsap.set(root.querySelectorAll('.reveal'), { opacity: 1, y: 0 })
-      gsap.set(root.querySelectorAll('[data-reveal-group] > *'), { opacity: 1, y: 0 })
+      // Skip empty selections: GSAP warns about missing targets.
+      for (const sel of ['.reveal', '[data-reveal-group] > *']) {
+        const els = root.querySelectorAll(sel)
+        if (els.length) gsap.set(els, { opacity: 1, y: 0 })
+      }
       return
     }
 

@@ -9,17 +9,22 @@ export default function Hero() {
   return (
     <section className="hero" id="top">
       <div className="container hero__inner">
-        <span className="eyebrow hero__eyebrow">
-          {t('hero.location')}
-        </span>
+        {/* Brand names stay as-is in every language. */}
+        <p className="hero__brand">
+          <span>
+            <strong>ToolDeck</strong>, by balear<b>STUDIO</b>
+          </span>
+        </p>
 
         <h1 className="hero__title">
           <span className="hero__line">
             <span>{t('hero.titleLine1')}</span>
-          </span>
+          </span>{' '}
+          {/* The spaces keep the heading readable as text ("persona a la…")
+              for search engines; the lines are blocks, so they don't show. */}
           <span className="hero__line">
             <span>{t('hero.titleLine2')}</span>
-          </span>
+          </span>{' '}
           <span className="hero__line hero__line--accent">
             <span>{t('hero.titleAccent')}</span>
           </span>
@@ -29,16 +34,21 @@ export default function Hero() {
           <p className="hero__lead">
             {t('hero.lead')}
           </p>
-          <a href="#contact" className="hero__cta btn-primary">
-            <span>{t('hero.cta')}</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+          <div className="hero__actions">
+            <a href="#contact" className="hero__cta btn-primary">
+              <span>{t('hero.cta')}</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+            <a href="#como-funciona" className="hero__secondary">
+              {t('hero.secondary')}
+            </a>
+          </div>
         </div>
       </div>
 
-      <a href="#work" className="hero__scroll" aria-label={t('hero.scroll')}>
+      <a href="#problema" className="hero__scroll" aria-label={t('hero.scroll')}>
         <span>{t('hero.scroll')}</span>
         <span className="hero__scroll-line" aria-hidden="true"></span>
       </a>

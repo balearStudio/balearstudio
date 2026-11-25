@@ -1,11 +1,12 @@
 .hero {
   position: relative;
-  min-height: 100svh;
+  /* Full screen on laptops, but capped: on tall monitors a full-height,
+     bottom-anchored hero left half the screen empty above the title. */
+  min-height: min(100svh, 52rem);
   display: flex;
-  align-items: flex-end;
-  /* Height-aware padding: shrinks on short/wide viewports instead of a
-     fixed rem value that can push the CTA below the fold. */
-  padding-block: clamp(5.5rem, 12svh, 9rem) clamp(1.25rem, 4svh, 2rem);
+  align-items: center;
+  /* Top padding clears the fixed 78px header. */
+  padding-block: clamp(6.5rem, 14svh, 9rem) clamp(3rem, 8svh, 5rem);
   overflow: hidden;
 }
 
@@ -16,12 +17,36 @@
   width: 100%;
 }
 
-.hero__eyebrow {
+/* "ToolDeck, by balearSTUDIO" — keeps the brands' own casing, so it is
+   not an uppercase .eyebrow. Same hairline lead-in as the eyebrow. */
+.hero__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   margin-bottom: 0.4rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}
+.hero__brand::before {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  background: var(--color-line-strong);
+}
+.hero__brand strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.hero__brand b {
+  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .hero__title {
-  font-size: clamp(2.4rem, 7.5vw, 6.6rem);
+  /* Capped so "Del prompt de una persona" fits on one line on desktop. */
+  font-size: clamp(2.3rem, 5.6vw, 5.2rem);
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 0.98;
@@ -50,9 +75,27 @@
 }
 
 .hero__lead {
-  max-width: 46ch;
+  max-width: 52ch;
   font-size: clamp(1rem, 1.4vw, 1.2rem);
   color: var(--color-text);
+}
+
+/* CTA pair ------------------------------------------------- */
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+.hero__secondary {
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-line-strong);
+  padding-bottom: 2px;
+  transition: border-color 0.3s var(--ease-out);
+}
+.hero__secondary:hover {
+  border-color: var(--color-ink);
 }
 
 /* Primary button ------------------------------------------- */
@@ -123,6 +166,7 @@
   .hero {
     min-height: 92svh;
     align-items: center;
+    padding-bottom: clamp(1.25rem, 4svh, 2rem);
   }
   .hero__scroll { display: none; }
   .hero__bottom { flex-direction: column; align-items: flex-start; gap: 1.8rem; }
@@ -131,7 +175,7 @@
 /* Short/wide viewports (landscape laptops, small browser windows) */
 @media (max-height: 720px) {
   .hero__scroll { display: none; }
-  .hero__title { font-size: clamp(2.2rem, 6.5vw, 4.6rem); }
+  .hero__title { font-size: clamp(2.1rem, 5vw, 4.2rem); }
 }
 
 /* Entrance animation. Pure CSS so it runs from the first paint of the prerendered
@@ -146,15 +190,15 @@
   .hero__line:nth-child(2) > span { animation-delay: 0.09s; }
   .hero__line:nth-child(3) > span { animation-delay: 0.18s; }
 
-  .hero__eyebrow,
+  .hero__brand,
   .hero__lead,
-  .hero__cta,
+  .hero__actions,
   .hero__scroll {
     animation: heroFade 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) backwards;
   }
-  .hero__eyebrow { animation-delay: 0.1s; }
+  .hero__brand { animation-delay: 0.1s; }
   .hero__lead { animation-delay: 0.3s; }
-  .hero__cta { animation-delay: 0.42s; }
+  .hero__actions { animation-delay: 0.42s; }
   .hero__scroll { animation-delay: 0.7s; }
 }
 @keyframes heroLine {

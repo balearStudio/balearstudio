@@ -6,43 +6,38 @@ export default function Studio() {
   const { t } = useLanguage()
   const ref = useScrollReveal({ stagger: 0.1 })
   const services = t('studio.services')
-  const values = t('studio.values')
 
   return (
     <section className="studio section" id="studio" ref={ref}>
       <div className="container">
         <span className="eyebrow reveal">{t('studio.eyebrow')}</span>
 
-        {/* Who we are — big statement */}
-        <h2 className="studio__statement reveal">{t('studio.whoTitle')}</h2>
-        <p className="studio__body reveal">{t('studio.whoBody')}</p>
-
-        {/* What we do + services */}
-        <div className="studio__do">
-          <div className="studio__do-text reveal" data-reveal-group>
-            <h3 className="studio__do-title">{t('studio.doTitle')}</h3>
-            <p className="studio__do-body">{t('studio.doBody')}</p>
+        <div className="studio__grid">
+          {/* Who we are */}
+          <div>
+            <h2 className="studio__statement reveal">{t('studio.title')}</h2>
+            <p className="studio__body reveal">{t('studio.body')}</p>
           </div>
-          <ul className="studio__services reveal" data-reveal-group>
-            {services.map((s) => (
-              <li key={s} className="studio__service">
-                <span className="studio__service-dot" aria-hidden="true"></span>
-                {s}
-              </li>
-            ))}
-          </ul>
-        </div>
 
-        {/* Values grid */}
-        <ul className="studio__values reveal" data-reveal-group>
-          {values.map((v) => (
-            <li key={v.k} className="studio__value">
-              <span className="studio__value-k">{v.k}</span>
-              <h4 className="studio__value-t">{v.t}</h4>
-              <p className="studio__value-d">{v.d}</p>
-            </li>
-          ))}
-        </ul>
+          {/* Custom work, kept short and secondary to ToolDeck */}
+          <div className="studio__do reveal">
+            <h3 className="studio__do-title">{t('studio.customTitle')}</h3>
+            <ul className="studio__services">
+              {services.map((s) => (
+                <li key={s} className="studio__service">
+                  <span className="studio__service-dot" aria-hidden="true"></span>
+                  {s}
+                </li>
+              ))}
+            </ul>
+            <a href="#work" className="studio__works-link">
+              {t('studio.worksLink')}
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   )

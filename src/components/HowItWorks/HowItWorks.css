@@ -1,0 +1,91 @@
+.how {
+  background: var(--color-bg-alt);
+}
+
+.how .eyebrow {
+  margin-bottom: 2rem;
+}
+
+.how__title {
+  font-size: clamp(1.8rem, 4.2vw, 3.3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  max-width: 20ch;
+}
+
+/* Steps / tabs ----------------------------------------------- */
+.how__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.how__step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--color-line-strong);
+  position: relative;
+  color: var(--color-text);
+}
+/* Active marker: an ink line drawn over the hairline. */
+.how__step::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+.how__step.is-active::before {
+  transform: scaleX(1);
+}
+
+.how__step-k {
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+.how__step-t {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text-soft);
+  transition: color 0.3s var(--ease-out);
+}
+.how__step-d {
+  margin-top: 0.6rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--color-text-soft);
+  transition: color 0.3s var(--ease-out);
+}
+.how__step.is-active .how__step-t,
+.how__step:hover .how__step-t {
+  color: var(--color-ink);
+}
+.how__step.is-active .how__step-d,
+.how__step:hover .how__step-d {
+  color: var(--color-text);
+}
+
+.how__shot {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+@media (max-width: 800px) {
+  .how__steps {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .how__step-t { margin-top: 0.5rem; }
+}
